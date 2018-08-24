@@ -56,7 +56,7 @@
         width: 300px;
         right: -290px;
 
-        &.active {
+        &.active, &:hover {
             right: 0;
         }
     }
