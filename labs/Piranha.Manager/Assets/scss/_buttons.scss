@@ -1,0 +1,21 @@
+@import "colors";
+
+.btn {
+    &.btn-primary, &.btn-primary.dropdown-toggle {
+        background-color: $color_link;
+        border-color: darken($color_link, 1%);
+
+        &:hover {
+            background-color: $color_link_hover;
+            border-color: darken($color_link_hover, 1%);
+        }
+    }
+
+    &.btn-labeled {
+        i {
+            padding-right: .5rem;
+            border-right: solid 1px rgba(255,255,255,0.3);
+            margin-right: .5rem;            
+        }
+    }
+}

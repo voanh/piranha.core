@@ -1,0 +1,19 @@
+.media-gallery {
+    img {
+        width: 75px;
+        height: 75px;
+        margin: 0 .5rem .5rem 0;
+        float: left;
+    }
+}
+
+.popover {
+    max-width: 200px;
+
+    .popover-body {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}

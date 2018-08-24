@@ -1,0 +1,9 @@
+@import "colors";
+
+a {
+    color: $color_link;
+
+    &:hover {
+        color: $color_link_hover;
+    }
+}

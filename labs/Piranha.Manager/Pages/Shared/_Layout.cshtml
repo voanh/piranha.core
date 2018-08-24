@@ -1,0 +1,77 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Piranha Manager (Labs)</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300">
+    <link rel="stylesheet" href="/assets/css/style.min.css">
+</head>
+
+<body>
+    <main class="container-fluid">
+        <div class="main-nav">
+            <nav>
+                <ul class="navbar-nav">
+                    <li><a class="header" href="#"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+                    <li>
+                        <span class="header"><i class="fas fa-pencil-alt"></i>Content</span>
+                        <ul>
+                            <li class="active"><a href="#"><i class="fas fa-copy"></i>Pages</a></li>
+                            <li><a href="#"><i class="fas fa-images"></i>Media</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="header"><i class="fas fa-wrench"></i>Settings</span>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-random"></i>Aliases</a></li>
+                            <li><a href="#"><i class="fas fa-globe"></i>Sites</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="header"><i class="fas fa-cog"></i>System</span>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-users"></i>Users</a></li>
+                            <li><a href="#"><i class="fas fa-eye-slash"></i>Roles</a></li>
+                            <li><a href="#"><i class="fas fa-cogs"></i>Config</a></li>
+                            <li><a href="#"><i class="fas fa-code-branch"></i>Modules</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="header" href="#"><i class="fas fa-power-off"></i>Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="top-nav">
+            <nav>
+                <ul class="navbar-nav">
+                    @RenderSection("topnav", required: false)
+                </ul>
+            </nav>            
+        </div>
+        <div class="body">
+            @RenderBody()
+        </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="popover"]').popover({
+                trigger: 'hover'
+            });
+
+            $('.panel-handle').click(function () {
+                $(this).closest('.panel').toggleClass('active');
+            });
+            $('.panel-close').click(function () {
+                $(this).closest('.panel').removeClass('active');
+            });
+        });
+    </script>
+</body>
+</html>

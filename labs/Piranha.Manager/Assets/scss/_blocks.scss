@@ -1,0 +1,108 @@
+.block {
+    position: relative;
+    padding: 2rem 1rem 1rem;
+    border: solid 1px transparent;
+    transition: border-color .2s ease-in-out;
+
+    .block-label {
+        color: #ccc;
+        position: absolute;
+        top: .25rem;
+        left: 1rem;
+        font-size: .8rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        opacity: 0;
+        transition: opacity .2s ease-in-out;
+
+        i {
+            padding-right: .5rem;
+        }
+    }
+
+    .block-buttons {
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        opacity: 0;
+        transition: opacity .2s ease-in-out;
+
+        .btn {
+            display: block;
+            float: left;
+            min-width: 30px;
+            padding: .25rem .5rem;
+            font-size: .7rem;
+            border: solid 2px #fff;
+            border-radius: 0;
+
+            &.btn-secondary {
+                background: #eee;
+                color: #444;
+                transition: background-color .2s ease-in-out;
+
+                &:hover {
+                    background: #ddd;
+                    transition: background-color .2s ease-in-out;
+                }
+            }
+        }
+    }
+
+    .content-area {
+        &:focus {
+            outline: none;
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    &:hover {
+        border-color: #e4e4e4;
+        transition: border-color .2s ease-in-out;
+
+        .block-label {
+            opacity: 1;
+            transition: opacity .2s ease-in-out;
+        }
+        .block-buttons {
+            opacity: 1;
+            transition: opacity .2s ease-in-out;
+        }
+    }
+}
+
+.block-add {
+    padding: 9px 1rem;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+
+    .block-add-inner {
+        position: relative;
+        background: lighten($bg_navbar, 10%);
+        height: 2px;
+    }
+
+    i {
+        background: #fff;
+        position: absolute;
+        font-size: 2rem;
+        margin-top: -2rem;
+        top: 1rem;
+        left: 50%;
+        margin-left: -1rem;
+        border-radius: 1rem;
+        z-index: 1000;
+    }
+
+    &:hover {
+        opacity: 1;
+        transition: opacity 0.2s ease-in-out;
+    }
+}

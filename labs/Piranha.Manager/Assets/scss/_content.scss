@@ -1,0 +1,12 @@
+@import "colors";
+
+.body {
+    .breadcrumb {
+        position: absolute;
+        top: 0;
+        background: transparent;
+        font-size: .8rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+}
