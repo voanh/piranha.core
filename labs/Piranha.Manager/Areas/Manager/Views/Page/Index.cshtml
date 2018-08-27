@@ -1,0 +1,64 @@
+@model Piranha.Manager.Models.PageEditModel
+
+@section topnav 
+{
+    @if (Model.PageType.Regions.Count > 0)
+    {
+        <li>
+            <div class="btn-group" role="group">
+                <button id="btnContent" type="button" class="btn btn-sm btn-labeled btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-table"></i>Regions
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnContent">
+                    @foreach (var region in Model.PageType.Regions)
+                    {
+                        <a class="dropdown-item" href="#">@region.Id</a>
+                    }
+                </div>
+            </div>
+        </li>
+    }
+    <li><button class="btn btn-sm btn-success"><i class="fas fa-check"></i></button></li>
+    <li><button class="btn btn-sm btn-primary btn-panel-settings"><i class="fas fa-cog"></i></button></li>
+}
+
+<form autocomplete="off" method="post">
+    <div class="body-content">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item" aria-current="page"><a href="#">Content</a></li>
+                <li class="breadcrumb-item" aria-current="page"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit</li>
+            </ol>
+        </nav>
+        @Html.TextBoxFor(m => m.Title, new { @class = "title" })
+        <div class="blocks">
+            <!--<div class="block-add">
+                <div class="block-add-inner">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+            </div>-->
+            @Html.EditorFor(m => m.Blocks)
+            <div class="block">
+                <span class="block-label"><i class="fas fa-image"></i>Image</span>
+                <div class="block-buttons">
+                    <div class="btn btn-sm btn-secondary sortable-handle"><span class="fas fa-ellipsis-v"></span></div>
+                    <button class="btn btn-sm btn-secondary"><i class="fas fa-trash"></i></button>
+                </div>
+                <img src="https://images-3.gog.com/fdc6ee70ba6aee36a86086a9391fbea1ac146ff15cfef037f19ea42046ffa1ca.jpg" alt="">
+            </div>
+        </div>
+    </div>
+    @Html.Partial("Partial/_PanelBlocks")
+    @Html.Partial("Partial/_PanelMedia")
+    @Html.Partial("Partial/_PanelSettings")
+
+    @section script
+    {
+        <script>
+            $(function () {
+                piranha.blocks.init();
+            });
+        </script>
+    }
+</form>

@@ -1,0 +1,36 @@
+@model Piranha.Extend.Blocks.HtmlColumnBlock
+@{
+    var prefix = Html.ViewData.TemplateInfo.HtmlFieldPrefix
+        .Replace("[", "_").Replace("]", "_").Replace(".", "_");
+    var isColumn1Empty = string.IsNullOrWhiteSpace(Model.Column1.Value);
+    var isColumn2Empty = string.IsNullOrWhiteSpace(Model.Column2.Value);
+}
+
+@Html.HiddenFor(m => m.Column1.Value, "")
+@Html.HiddenFor(m => m.Column2.Value, "")
+<div class="row">
+    <div class="col">
+        <div id="Editor_@Guid.NewGuid()" class="content-area block-editor editor-area @(isColumn1Empty ? "empty" : "check-empty")" data-id="@(prefix)_Column1_Value" spellcheck="false">
+            @if (!isColumn1Empty) 
+            {
+                @Html.Raw(Model.Column1.Value)
+            } 
+            else 
+            {
+                <p></p>
+            }
+        </div>
+    </div>
+    <div class="col">
+        <div id="Editor_@Guid.NewGuid()" class="content-area block-editor editor-area @(isColumn2Empty ? "empty" : "check-empty")" data-id="@(prefix)_Column2_Value" spellcheck="false">
+            @if (!isColumn2Empty) 
+            {
+                @Html.Raw(Model.Column2.Value)
+            } 
+            else 
+            {
+                <p></p>
+            }
+        </div>
+    </div>
+</div>
