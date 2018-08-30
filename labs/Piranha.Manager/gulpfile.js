@@ -26,6 +26,16 @@ gulp.task('min:css', function () {
         .pipe(gulp.dest('wwwroot/assets/css'));
     });
 
+gulp.task('min:editor', function () {
+    return gulp.src('Assets/scss/editor.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(cssmin())
+        .pipe(rename({
+            suffix: ".min"
+        }))
+        .pipe(gulp.dest('wwwroot/assets/css'));
+    });
+
 gulp.task("min:js", function () {
     return gulp.src(input.js, { base: "." })
         .pipe(concat(output.js))

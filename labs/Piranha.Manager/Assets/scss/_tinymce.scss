@@ -29,6 +29,29 @@ $mce_active: lighten($mce_bg, 7%);
         }
     }
 
+    .mce-btn {
+        border-radius: 3px;
+        transition: all .2s ease-in-out;
+
+        &:hover {
+            background-color: darken(#fff, 5%);
+            border: solid 1px darken(#fff, 5%);
+            transition: all .2s ease-in-out;
+        }
+
+        &.mce-active {
+            background-color: darken(#fff, 15%);
+            border: solid 1px darken(#fff, 15%);
+            transition: all .2s ease-in-out;
+
+            &:hover {
+                background-color: darken(#fff, 15%);
+                border: solid 1px darken(#fff, 15%);
+                transition: all .2s ease-in-out;
+            }
+        }
+    }
+
     .mce-edit-area {
         border: none 0;
     }
@@ -60,18 +83,14 @@ $mce_active: lighten($mce_bg, 7%);
     
         .mce-btn {
             background-color: $mce_bg;
-            border-radius: 3px;
-            transition: all .2s ease-in-out;
     
             &:hover {
                 background-color: $mce_hover;
                 border: solid 1px $mce_hover;
-                transition: all .2s ease-in-out;
             }
     
             &.mce-active {
                 background: $mce_active;
-                transition: all .2s ease-in-out;
     
                 &.mce-opened {
                     background: $mce_active;
@@ -84,7 +103,6 @@ $mce_active: lighten($mce_bg, 7%);
                 &:hover {
                     background: $mce_active;
                     border-color: $mce_active;
-                    transition: all .2s ease-in-out;
     
                     button {
                         .mce-ico {
