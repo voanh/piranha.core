@@ -1107,7 +1107,9 @@ piranha.blocks = new function() {
             items: ':not(.unsortable)'
         });
         for (var n = 0; n < sortables.length; n++) {
-            console.log('Found sortable block list');
+            // TODO!!! 
+            //
+            // Setup events
         }
     };
 };
@@ -1124,5 +1126,11 @@ $(function () {
     $('.btn-panel-settings').click(function (e) {
         e.preventDefault();
         $('.panel-settings').toggleClass('active');
+    });
+
+    $('.btn-panel-region').click(function (e) {
+        e.preventDefault();
+        console.log($($(this).data('id')));
+        $($(this).data('id')).toggleClass('active');
     });
 });

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Piranha.Extend.Blocks;
+using Piranha.Local;
 
 namespace Piranha.Manager
 {
@@ -35,10 +37,13 @@ namespace Piranha.Manager
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddPiranhaFileStorage();
             services.AddPiranhaEF(options => options.UseSqlite("Filename=./piranha.labs.db"));
-            services.AddScoped<Services.PageEditService, Services.PageEditService>();
 
+            // Should be packaged into a service extensions
+            services.AddScoped<Services.PageEditService, Services.PageEditService>();
             App.Modules.Register<Module>();
+
             App.Init();
         }
 
@@ -70,6 +75,15 @@ namespace Piranha.Manager
             {
                 var site = api.Sites.GetDefault();
 
+                var imageId = Guid.NewGuid();
+                using (var stream = File.OpenRead("Assets/img/hyperlightdrifter.jpg")) {
+                    api.Media.Save(new Piranha.Models.StreamMediaContent() {
+                        Id = imageId,
+                        Filename = "hyperlightdrifter.jpg",
+                        Data = stream
+                    });
+                }
+
                 var page = TestPage.Create(api);
                 page.Id = new Guid("a47bc4f1-1722-4e09-b596-ab25d7657afb");
                 page.SiteId = site.Id;
@@ -77,6 +91,10 @@ namespace Piranha.Manager
                 page.Blocks.Add(new HtmlBlock 
                 {
                     Body = "<p>Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum id ligula porta felis euismod semper. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo.</p>"
+                });
+                page.Blocks.Add(new ImageBlock
+                {
+                    Body = imageId
                 });
                 page.Blocks.Add(new HtmlColumnBlock
                 {

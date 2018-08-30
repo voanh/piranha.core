@@ -46,6 +46,7 @@ namespace Piranha.Manager.Services
             editRegion.Id = region.Id;
             editRegion.Title = region.Title ?? region.Id;
             editRegion.CLRType = editRegion.GetType().FullName;
+            editRegion.Description = region.Description;
 
             IList items = new List<object>();
 

@@ -5,7 +5,7 @@
     top: 0;
     right: 0;
     padding: .5rem 1rem;
-    border-left: solid 4px #fff;
+    border-left: solid 4px $bg;
     transition: right .2s ease-in-out;
 
     &.active, &:hover {
@@ -71,9 +71,9 @@
 
     &.panel-regions {
         width: 600px;
-        right: -560px;
+        right: -600px;
 
-        &.active, &:hover {
+        &.active {
             right: 0;
         }
     }

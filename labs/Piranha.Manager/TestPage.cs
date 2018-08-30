@@ -21,5 +21,23 @@ namespace Piranha.Manager
     [PageType(Title = "Test page")]
     public class TestPage : Page<TestPage>
     {
+        public class HeaderRegion
+        {
+            [Field(Options = FieldOption.HalfWidth)]
+            public StringField Title { get; set; }
+
+            [Field(Title = "Sub title", Options = FieldOption.HalfWidth)]
+            public StringField SubTitle { get; set; }
+
+            [Field(Title = "Background image")]
+            public ImageField Background { get; set; }
+
+            [Field]
+            public HtmlField Body { get; set; }
+        }
+
+        [Region]
+        [RegionDescription("The Header shows an optional Hero banner on the page. If you leave all fields empty the header will be omitted from the current page.")]
+        public HeaderRegion Header { get; set; }
     }
 }

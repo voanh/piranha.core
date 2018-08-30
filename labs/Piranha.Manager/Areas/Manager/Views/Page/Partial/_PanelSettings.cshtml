@@ -13,6 +13,13 @@
             @Html.TextBoxFor(m => m.NavigationTitle, new { @class = "form-control form-control-sm" })
         </div>
         <div class="form-group">
+            <label>Hidden</label>
+            <div class="form-check">
+                @Html.CheckBoxFor(m => m.IsHidden, new { @class = "form-check-input" })
+                @Html.LabelFor(m => m.IsHidden, "If the page should be hidden in the sitemap.", new { @class = "form-check-label" })
+            </div>
+        </div>
+        <div class="form-group">
             <label>Slug</label>
             @Html.TextBoxFor(m => m.Slug, new { @class = "form-control form-control-sm" })
         </div>

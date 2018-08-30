@@ -24,7 +24,7 @@
         width: 200px;
 
         li {
-            border-bottom: solid 1px #444;
+            border-bottom: solid 1px lighten($bg_navbar, 10%);
             position: relative;
 
             &.active::after {
@@ -36,7 +36,7 @@
                 right: 0;
                 margin-top: -8px;
                 border: solid 8px transparent;
-                border-right-color: #fff;
+                border-right-color: $bg;
             }
 
             a, span {
@@ -50,13 +50,13 @@
             }
 
             .header {
-                color: #fff;
+                color: $bg;
                 font-family: 'Open Sans', sans-serif;
                 font-size: 16px;
                 font-weight: 300;
 
                 &:hover {
-                    color: #fff;
+                    color: $bg;
                 }
             }
 

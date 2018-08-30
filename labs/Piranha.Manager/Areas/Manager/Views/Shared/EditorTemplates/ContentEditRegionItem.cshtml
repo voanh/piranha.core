@@ -1,0 +1,37 @@
+@model Piranha.Manager.Models.ContentEditRegionItem
+@using Piranha.Models
+
+<div id="region-@Model.Id" class="panel panel-regions">
+    <a class="panel-close" href="#"><i class="fas fa-times"></i></a>
+    <span class="panel-title">@Model.Title</span>
+    <div class="panel-body">
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.Title)
+        @Html.HiddenFor(m => m.CLRType)
+
+        @if (!string.IsNullOrWhiteSpace(Model.Description))
+        {
+            <p class="text-help">@Model.Description</p>
+        }
+
+        <div class="row">
+            @for (var n = 0; n < Model.FieldSet.Count; n++) 
+            {
+                <div class="col-sm-@(Model.FieldSet[n].Options.HasFlag(FieldOption.HalfWidth) ? "6" : "12")">
+                    <div class="form-group @(Model.FieldSet.Count == 1 ? "single-region" : "")">
+                        @Html.HiddenFor(m => m.FieldSet[n].Id)
+                        @Html.HiddenFor(m => m.FieldSet[n].CLRType)
+                        @if (Model.FieldSet.Count > 1) {
+                            <label>@Model.FieldSet[n].Title</label>
+                        }
+                        @if (Model.FieldSet[n].Value.GetType().IsGenericType) {
+                            @Html.EditorFor(m => m.FieldSet[n].Value, Model.FieldSet[n].Value.GetType().BaseType.Name)
+                        } else {
+                            @Html.EditorFor(m => m.FieldSet[n].Value, Model.FieldSet[n].Value.GetType().Name)
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

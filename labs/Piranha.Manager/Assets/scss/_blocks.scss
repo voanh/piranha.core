@@ -14,7 +14,7 @@
     transition: border-color .2s ease-in-out;
 
     .block-label {
-        color: #ccc;
+        color: $text_lighter;
         position: absolute;
         top: .25rem;
         left: 1rem;
@@ -42,11 +42,11 @@
             min-width: 30px;
             padding: .25rem .5rem;
             font-size: .7rem;
-            border: solid 2px #fff;
+            border: solid 2px $bg;
 
             &.btn-secondary {
                 background: $color_border;
-                color: #444;
+                color: $text_medium;
                 transition: background-color .2s ease-in-out;
 
                 &:hover {
@@ -76,6 +76,35 @@
 			outline: 0 none;
 		}
     }
+
+	.block-image {
+		background: $bg;
+		position: relative;
+		max-height: 400px;
+		min-height: 200px;
+		overflow: hidden;
+		text-align: center;
+
+		.block-image-picker {
+			position: absolute;
+			width: 90%;
+			top: 50%;
+			right: 5%;
+			background: rgba(0,0,0,0.4);
+			padding: 1.25rem;
+			border-radius: 5px;
+			margin-top: -40px;
+			opacity: 0;
+            transition: opacity ease-in-out 0.2s;
+		}
+
+		&:hover {
+			.block-image-picker {
+				opacity: 1;
+				transition: opacity ease-in-out 0.2s;
+			}
+		}
+	}    
     
     &:hover {
         border-color: $color_border;
