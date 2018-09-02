@@ -74,7 +74,8 @@ namespace Piranha.Manager
                     .ForMember(m => m.PageType, o => o.Ignore())
                     .ForMember(m => m.Blocks, o => o.Ignore())
                     .ForMember(m => m.Regions, o => o.Ignore())
-                    .ForMember(m => m.PageContentType, o => o.Ignore());
+                    .ForMember(m => m.PageContentType, o => o.Ignore())
+                    .ForMember(m => m.PinnedRegions, o => o.Ignore());
                 cfg.CreateMap<Models.PageEditModel, PageBase>()
                     .ForMember(m => m.Blocks, o => o.Ignore())
                     .ForMember(m => m.TypeId, o => o.Ignore())

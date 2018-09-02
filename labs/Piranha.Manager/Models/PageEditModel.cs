@@ -20,7 +20,7 @@ namespace Piranha.Manager.Models
     /// The page edit view model.
     /// </summary>
     public class PageEditModel : Piranha.Models.PageBase, IContentEditModel
-    {
+    {        
         /// <summary>
         /// Gets/sets the page type.
         /// </summary>
@@ -40,5 +40,22 @@ namespace Piranha.Manager.Models
         /// Gets/sets the page content type.
         /// </summary>
         public Runtime.AppContentType PageContentType { get; set; }
+
+        public PinnedRegionInfo PinnedRegions { get; set; } = new PinnedRegionInfo();
+    }
+
+    public class PinnedRegionInfo
+    {
+        public IList<RegionInfo> BeforeTitle { get; set; } = new List<RegionInfo>();
+        public IList<RegionInfo> BeforeBody { get; set; } = new List<RegionInfo>();
+        public IList<RegionInfo> AfterBody { get; set; } = new List<RegionInfo>();
+        public IList<RegionInfo> UnPinned { get; set; } = new List<RegionInfo>();
+    }
+
+    public class RegionInfo
+    {
+        public string Id { get; set; }
+        public string Title { get; set; }
+        public object Body { get; set; }
     }
 }

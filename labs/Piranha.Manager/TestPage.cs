@@ -36,7 +36,7 @@ namespace Piranha.Manager
             public HtmlField Body { get; set; }
         }
 
-        [Region]
+        [Region(Position = RegionTypePosition.BeforeBody)]
         [RegionDescription("The Header shows an optional Hero banner on the page. If you leave all fields empty the header will be omitted from the current page.")]
         public HeaderRegion Header { get; set; }
     }

@@ -33,6 +33,9 @@ namespace Piranha.Manager.Models
         /// </summary>
         public bool IsReusable { get; set; }
 
+        /// <summary>
+        /// Gets/sets if this is a block group.
+        /// </summary>
         public bool IsGroup { get; set; }
 
         /// <summary>
@@ -40,10 +43,10 @@ namespace Piranha.Manager.Models
         /// </summary>
         public Extend.Block Value { get; set; }
 
-        public IList<ContentEditBlock> Items { get; set; }
-
-        public ContentEditBlock() {
-            Items = new List<ContentEditBlock>();
-        }
+        /// <summary>
+        /// Gets/sets the optional child items if this
+        /// is a block group.
+        /// </summary>
+        public IList<ContentEditBlock> Items { get; set; } = new List<ContentEditBlock>();
     }    
 }

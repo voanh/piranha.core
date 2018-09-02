@@ -2,7 +2,7 @@
 
 @section topnav 
 {
-    @if (Model.PageType.Regions.Count > 0)
+    @if (Model.PinnedRegions.UnPinned.Count > 0)
     {
         <li>
             <div class="btn-group" role="group">
@@ -10,7 +10,7 @@
                     <i class="fas fa-table"></i>Regions
                 </button>
                 <div class="dropdown-menu" aria-labelledby="btnContent">
-                    @foreach (var region in Model.PageType.Regions)
+                    @foreach (var region in Model.PinnedRegions.UnPinned)
                     {
                         <a class="dropdown-item btn-panel-region" data-id="#region-@region.Id" href="#">@region.Id</a>
                     }
@@ -31,10 +31,14 @@
                 <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
         </nav>
+
+        @Html.DisplayFor(m => Model.PinnedRegions.BeforeTitle)
         @Html.TextBoxFor(m => m.Title, new { @class = "title" })
+        @Html.DisplayFor(m => Model.PinnedRegions.BeforeBody)
         <div class="blocks">
             @Html.EditorFor(m => m.Blocks)
         </div>
+        @Html.DisplayFor(m => Model.PinnedRegions.AfterBody)
     </div>
     @Html.Partial("Partial/_PanelBlocks")
     @Html.Partial("Partial/_PanelMedia")

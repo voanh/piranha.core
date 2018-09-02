@@ -5,13 +5,17 @@
         margin: 0 1rem;
         min-height: 100px;
     }
+
+    .block-type {
+        display: none;
+    }
 }
 
 .block {
     position: relative;
     padding: 2rem 1rem 1rem;
     border: solid 1px transparent;
-    transition: border-color .2s ease-in-out;
+    transition: all .2s ease-in-out;
 
     .block-label {
         color: $text_lighter;
@@ -75,10 +79,20 @@
 		&.mce-edit-focus {
 			outline: 0 none;
 		}
+
+		&.empty {
+			background: $bg_panel url('/assets/img/empty-text.png') 50% 50% no-repeat;
+			border: solid 10px $bg_panel;
+			min-height: 66px !important;
+
+			p:first-of-type {
+				min-height: 86px;
+			}
+		}
     }
 
 	.block-image {
-		background: $bg;
+		background: $bg_panel;
 		position: relative;
 		max-height: 400px;
 		min-height: 200px;
@@ -117,6 +131,41 @@
         .block-buttons {
             opacity: 1;
             transition: opacity .2s ease-in-out;
+        }
+    }
+}
+
+.block-category {
+    font-size: .8rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    background: #ccc;
+    padding: .5rem;    
+}
+
+.block-type {
+    display: inline-block;
+    width: 32%;
+    margin-bottom: .5rem;    
+
+    a {
+        display: block;
+        background: darken($bg_panel, 7%);
+        color: $text_light;
+        text-align: center;
+        font-size: .75rem;
+        padding: .75rem .5rem;
+        border-radius: .25rem;
+
+        &:hover {
+            text-decoration: none;
+        }
+
+        i {
+            display: block;
+            color: $color_link;
+            font-size: 1.5rem;
+            height: 2rem;
         }
     }
 }

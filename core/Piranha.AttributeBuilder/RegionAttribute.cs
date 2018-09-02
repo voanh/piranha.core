@@ -9,6 +9,7 @@
  */
 
 using System;
+using Piranha.Models;
 
 namespace Piranha.AttributeBuilder
 {
@@ -39,20 +40,16 @@ namespace Piranha.AttributeBuilder
         /// Gets/sets if list items should be expandable. If not, the 
         /// content is placed directly in the title.
         /// </summary>
-        public bool ListExpand { get; set; }
+        public bool ListExpand { get; set; } = true;
 
         /// <summary>
         /// Gets/sets the optional sort order.
         /// </summary>
-        public int SortOrder { get; set; }
+        public int SortOrder { get; set; } = Int32.MaxValue;
 
         /// <summary>
-        /// Default constructor.
+        /// Gets/sets the region position in the manager interface.
         /// </summary>
-        public RegionAttribute()
-        {
-            SortOrder = Int32.MaxValue;
-            ListExpand = true;
-        }
+        public RegionTypePosition Position { get; set; } = RegionTypePosition.NotSpecified;
     }
 }

@@ -43,7 +43,7 @@ namespace Piranha.Models
         /// Gets/sets if list items should be expandable. If not, the
         /// content is placed directly in the title.
         /// </summary>
-        public bool ListExpand { get; set; }
+        public bool ListExpand { get; set; } = true;
 
         /// <summary>
         /// Gets/sets the optional description to be shown in
@@ -52,17 +52,13 @@ namespace Piranha.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets/sets the available fields.
+        /// Gets/sets the region position in the manager interface.
         /// </summary>
-        public IList<FieldType> Fields { get; set; }
+        public RegionTypePosition Position { get; set; } = RegionTypePosition.NotSpecified;
 
         /// <summary>
-        /// Default constructor.
+        /// Gets/sets the available fields.
         /// </summary>
-        public RegionType()
-        {
-            Fields = new List<FieldType>();
-            ListExpand = true;
-        }
+        public IList<FieldType> Fields { get; set; } = new List<FieldType>();
     }
 }

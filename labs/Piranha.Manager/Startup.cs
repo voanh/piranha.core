@@ -84,6 +84,15 @@ namespace Piranha.Manager
                     });
                 }
 
+                var heroId = Guid.NewGuid();
+                using (var stream = File.OpenRead("Assets/img/heroimage.png")) {
+                    api.Media.Save(new Piranha.Models.StreamMediaContent() {
+                        Id = heroId,
+                        Filename = "heroimage.png",
+                        Data = stream
+                    });
+                }
+
                 var page = TestPage.Create(api);
                 page.Id = new Guid("a47bc4f1-1722-4e09-b596-ab25d7657afb");
                 page.SiteId = site.Id;
@@ -101,6 +110,10 @@ namespace Piranha.Manager
                     Column1 = "<p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Nullam id dolor id nibh ultricies vehicula ut id elit. Aenean lacinia bibendum nulla sed consectetur. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>",
                     Column2 = "<p>Nullam quis risus eget urna mollis ornare vel eu leo. Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Donec id elit non mi porta gravida at eget metus.</p>"
                 });
+                page.Header.Title = "Tellus Tortor Consectetur";
+                page.Header.SubTitle = "Ultricies Mattis Malesuada Purus";
+                page.Header.Background = heroId;
+                page.Header.Body = "<p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>";
                 page.Published = DateTime.Now;
 
                 api.Pages.Save(page);

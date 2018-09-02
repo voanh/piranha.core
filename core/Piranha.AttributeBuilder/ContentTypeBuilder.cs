@@ -66,7 +66,8 @@ namespace Piranha.AttributeBuilder
                     Collection = isCollection,
                     ListTitleField = attr.ListTitle,
                     ListTitlePlaceholder = attr.ListPlaceholder,
-                    ListExpand = attr.ListExpand
+                    ListExpand = attr.ListExpand,
+                    Position = attr.Position
                 };
                 int? sortOrder = attr.SortOrder != Int32.MaxValue ? attr.SortOrder : (int?)null;
 

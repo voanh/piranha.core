@@ -18,6 +18,10 @@ form {
         }
     }
 
+    .form-control {
+        border-color: $color_border;
+    }
+
     .panel {
         .form-group {
             margin-bottom: .5rem;

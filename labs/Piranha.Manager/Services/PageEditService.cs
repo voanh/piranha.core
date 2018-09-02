@@ -96,12 +96,51 @@ namespace Piranha.Manager.Services
 
             if (page != null) 
             {
+                var clrPage = _api.Pages.GetById<Piranha.Models.PageBase>(id);
+
                 var model = Module.Mapper.Map<Piranha.Models.PageBase, PageEditModel>(page);
                 model.PageType = _api.PageTypes.GetById(model.TypeId);
                 model.PageContentType = App.ContentTypes.GetById(model.PageType.ContentTypeId);
 
                 LoadRegions(page, model, model.PageType);
                 LoadBlocks(page, model);
+
+                foreach (var region in model.PageType.Regions.Where(r => r.Position == Piranha.Models.RegionTypePosition.BeforeTitle))
+                {
+                    model.PinnedRegions.BeforeTitle.Add(new RegionInfo 
+                    { 
+                        Id = region.Id, 
+                        Title = !string.IsNullOrEmpty(region.Title) ? region.Title : region.Id,
+                        Body = clrPage.GetType().GetProperty(region.Id, App.PropertyBindings).GetValue(clrPage)
+                    });
+                }
+                foreach (var region in model.PageType.Regions.Where(r => r.Position == Piranha.Models.RegionTypePosition.BeforeBody))
+                {
+                    model.PinnedRegions.BeforeBody.Add(new RegionInfo 
+                    { 
+                        Id = region.Id, 
+                        Title = !string.IsNullOrEmpty(region.Title) ? region.Title : region.Id,
+                        Body = clrPage.GetType().GetProperty(region.Id, App.PropertyBindings).GetValue(clrPage)
+                    });
+                }
+                foreach (var region in model.PageType.Regions.Where(r => r.Position == Piranha.Models.RegionTypePosition.AfterBody))
+                {
+                    model.PinnedRegions.AfterBody.Add(new RegionInfo 
+                    { 
+                        Id = region.Id,
+                        Title = !string.IsNullOrEmpty(region.Title) ? region.Title : region.Id,
+                        Body = clrPage.GetType().GetProperty(region.Id, App.PropertyBindings).GetValue(clrPage)
+                    });
+                }
+                foreach (var region in model.PageType.Regions.Where(r => r.Position == Piranha.Models.RegionTypePosition.NotSpecified))
+                {
+                    model.PinnedRegions.UnPinned.Add(new RegionInfo 
+                    { 
+                        Id = region.Id, 
+                        Title = !string.IsNullOrEmpty(region.Title) ? region.Title : region.Id,
+                        Body = clrPage.GetType().GetProperty(region.Id, App.PropertyBindings).GetValue(clrPage)
+                    });
+                }
 
                 return model;
             }
