@@ -1,0 +1,17 @@
+@model Piranha.Extend.Blocks.QuoteBlock
+@{
+    var prefix = Html.ViewData.TemplateInfo.HtmlFieldPrefix
+        .Replace("[", "_").Replace("]", "_").Replace(".", "_");
+    var isEmpty = string.IsNullOrWhiteSpace(Model.Body.Value);
+}
+
+@Html.HiddenFor(m => m.Body.Value, "")
+<div class="content-preview block-quote">
+    <blockquote>
+        <div class="editor-area quote @(isEmpty ? "empty" : "check-empty")" contenteditable="true" data-id="@(prefix)_Body_Value">
+            @if (!string.IsNullOrWhiteSpace(Model.Body.Value)) {
+                @Html.Raw(Model.Body.Value)
+            }
+        </div>
+    </blockquote>
+</div>

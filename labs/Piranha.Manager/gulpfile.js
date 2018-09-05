@@ -9,6 +9,7 @@ var input = {
     js: [
         "Assets/js/html5sortable.js",
         "Assets/js/piranha.blocks.js",
+        "Assets/js/piranha.tools.js",
         "Assets/js/startup.js"
     ]
 };

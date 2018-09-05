@@ -30,26 +30,27 @@ namespace Piranha.Manager.Controllers
         [Route("manager/pages")]
         public IActionResult Index()
         {
-            return View(_service.GetById(new Guid("a47bc4f1-1722-4e09-b596-ab25d7657afb")));
+            return RedirectToAction("Edit", new { id = new Guid("a47bc4f1-1722-4e09-b596-ab25d7657afb") });
         }
 
-        [Route("manager/page/block/{type}/{index:int}")]
-        public IActionResult CreateBlock(string type, int index)
+        [Route("manager/page/add/{type}")]
+        public IActionResult Add(string type)
         {
-            var block = (Extend.Block)_contentService.CreateBlock(type);
+            var model = _service.Create(type);
 
-            if (block != null) 
-            {
-                ViewData.TemplateInfo.HtmlFieldPrefix = $"Blocks[{index}]";
+            if (model != null)
+                return View("Edit", model);
+            return NotFound();
+        }
 
-                return View("EditorTemplates/ContentEditBlock", new Models.ContentEditBlock() {
-                    Id = block.Id,
-                    CLRType = block.GetType().FullName,
-                    IsGroup = typeof(Extend.BlockGroup).IsAssignableFrom(block.GetType()),
-                    Value = block
-                });
-            }
-            return new NotFoundResult();
+        [Route("manager/page/{id:Guid}")]
+        public IActionResult Edit(Guid id)
+        {
+            var model = _service.GetById(id);
+
+            if (model != null)
+                return View(model);
+            return NotFound();
         }
     }
 }

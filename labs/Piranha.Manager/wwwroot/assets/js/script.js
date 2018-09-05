@@ -1102,24 +1102,38 @@ piranha.blocks = new function() {
     var self = this;
 
     self.init = function () {
+        // Create block type list
         var types = sortable('.block-types', {
             items: ':not(.unsortable)',
             acceptFrom: false,
             copy: true
         });
+
+        // Create the main block list
         var blocks = sortable('.blocks', {
             handle: '.sortable-handle',
             items: ':not(.unsortable)',
             acceptFrom: '.blocks,.block-types'
         });
+
+        // Add sortable events
         blocks[0].addEventListener('sortupdate', function(e) {
             var item = e.detail.item;
 
             if ($(item).hasClass('block-type')) {
+                //
+                // New block dropped in block list, create and
+                // insert editor view.
+                //
                 $.ajax({
-                    url: '/manager/page/block/' + $(item).data('typename') + '/' + e.detail.destination.index,
-                    method: 'GET',
+                    url: piranha.baseUrl + 'manager/block/create',
+                    method: 'POST',
+                    contentType: 'application/json',
                     dataType: 'html',
+                    data: JSON.stringify({
+                        Type: $(item).data('typename'),
+                        Index: e.detail.destination.index
+                    }),
                     success: function (res) {
                         // Remove the block-type container
                         $('.blocks .block-type').remove();
@@ -1133,20 +1147,21 @@ piranha.blocks = new function() {
                             addInlineEditor('#' + this.id);
                         });
 
+                        // Update the sortable list
+                        sortable('.blocks', {
+                            handle: '.sortable-handle',
+                            items: ':not(.unsortable)',
+                            acceptFrom: '.blocks,.block-types'
+                        });
+
                         // Unhide
                         $('.blocks .loading').removeClass('loading');
-
-                        // Focus HTML-fields
-                        if ($(item).data('typename') == 'Piranha.Extend.Blocks.HtmlBlock')
-                        {
-                            console.log('focusing editor');
-                            $(res).find('.block-editor p').focus();
-                        }
                     }
                 });
-                console.log('Dropped new block [' + $(item).data('typename') + '] at position [' + e.detail.destination.index + ']');
             } else {
-                console.log('Dropped existing block');
+                //
+                // Existing block changed position in the list.
+                //
             }
         });
     };
@@ -1156,7 +1171,36 @@ piranha.blocks = new function() {
 
         $(this).closest('.block').remove();
     });
+
+    $(document).on('focus', '.block .empty', function () {
+        $(this).removeClass('empty');
+        $(this).addClass('check-empty');
+    });
+
+    $(document).on('blur','.block .check-empty', function () {
+        if (piranha.tools.isEmpty(this)) {
+            $(this).removeClass('check-empty');    
+            $(this).addClass('empty');
+        }
+    });    
 };
+if (typeof(piranha)  == 'undefined')
+    piranha = {};
+
+piranha.tools = new function() {
+    'use strict';
+
+    var self = this;
+
+    /**
+     * Checks if the given dom element has any text content.
+     * 
+     * @param {*} elm The dom element
+     */
+    self.isEmpty = function (elm) {
+        return $(elm).text().replace(/\s/g, '') == '' && $(elm).find('img').length == 0;
+    };
+}
 $(function () {
     $('[data-toggle="popover"]').popover({
         trigger: 'hover'

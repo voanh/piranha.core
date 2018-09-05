@@ -21,5 +21,14 @@ namespace CoreWeb.Models
     [PageType(Title = "Standard page")]
     public class StandardPage : BasePage<StandardPage>
     {
+        [Region]
+        public SelectField<AlignType> HorizontalAlignment { get; set; }
+    }
+
+    public enum AlignType 
+    {
+        Left,
+        Right,
+        Center
     }
 }

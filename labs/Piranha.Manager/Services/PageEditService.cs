@@ -12,6 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Piranha.Manager;
 using Piranha.Manager.Models;
 using Piranha.Services;
@@ -96,51 +97,13 @@ namespace Piranha.Manager.Services
 
             if (page != null) 
             {
-                var clrPage = _api.Pages.GetById<Piranha.Models.PageBase>(id);
-
                 var model = Module.Mapper.Map<Piranha.Models.PageBase, PageEditModel>(page);
                 model.PageType = _api.PageTypes.GetById(model.TypeId);
                 model.PageContentType = App.ContentTypes.GetById(model.PageType.ContentTypeId);
 
                 LoadRegions(page, model, model.PageType);
                 LoadBlocks(page, model);
-
-                foreach (var region in model.PageType.Regions.Where(r => r.Position == Piranha.Models.RegionTypePosition.BeforeTitle))
-                {
-                    model.PinnedRegions.BeforeTitle.Add(new RegionInfo 
-                    { 
-                        Id = region.Id, 
-                        Title = !string.IsNullOrEmpty(region.Title) ? region.Title : region.Id,
-                        Body = clrPage.GetType().GetProperty(region.Id, App.PropertyBindings).GetValue(clrPage)
-                    });
-                }
-                foreach (var region in model.PageType.Regions.Where(r => r.Position == Piranha.Models.RegionTypePosition.BeforeBody))
-                {
-                    model.PinnedRegions.BeforeBody.Add(new RegionInfo 
-                    { 
-                        Id = region.Id, 
-                        Title = !string.IsNullOrEmpty(region.Title) ? region.Title : region.Id,
-                        Body = clrPage.GetType().GetProperty(region.Id, App.PropertyBindings).GetValue(clrPage)
-                    });
-                }
-                foreach (var region in model.PageType.Regions.Where(r => r.Position == Piranha.Models.RegionTypePosition.AfterBody))
-                {
-                    model.PinnedRegions.AfterBody.Add(new RegionInfo 
-                    { 
-                        Id = region.Id,
-                        Title = !string.IsNullOrEmpty(region.Title) ? region.Title : region.Id,
-                        Body = clrPage.GetType().GetProperty(region.Id, App.PropertyBindings).GetValue(clrPage)
-                    });
-                }
-                foreach (var region in model.PageType.Regions.Where(r => r.Position == Piranha.Models.RegionTypePosition.NotSpecified))
-                {
-                    model.PinnedRegions.UnPinned.Add(new RegionInfo 
-                    { 
-                        Id = region.Id, 
-                        Title = !string.IsNullOrEmpty(region.Title) ? region.Title : region.Id,
-                        Body = clrPage.GetType().GetProperty(region.Id, App.PropertyBindings).GetValue(clrPage)
-                    });
-                }
+                PinRegions(model, id);
 
                 return model;
             }
@@ -189,10 +152,65 @@ namespace Piranha.Manager.Services
                 model.ContentType = model.PageContentType != null ? model.PageContentType.Id : null;
 
                 LoadRegions(page, model, type);
+                PinRegions(model, null);
 
                 return model;
             }
             throw new KeyNotFoundException($"No page type found with the id '{pageTypeId}'");
+        }
+
+        private void PinRegions(Models.PageEditModel model, Guid? id)
+        {
+            var clrPage = id.HasValue ? _api.Pages.GetById<Piranha.Models.PageBase>(id.Value) : null;
+
+            if (clrPage == null)
+            {
+                var type = Type.GetType(model.PageType.CLRType);
+                if (type == null)
+                    throw new Exception("KEFF");
+                clrPage = (Piranha.Models.PageBase)type.GetMethod("Create", BindingFlags.FlattenHierarchy | BindingFlags.Public | BindingFlags.Static)
+                    .Invoke(null, new object[] { _api, null });
+            }
+
+            if (clrPage != null)
+            {
+                foreach (var region in model.PageType.Regions.Where(r => r.Position == Piranha.Models.RegionTypePosition.BeforeTitle))
+                {
+                    model.PinnedRegions.BeforeTitle.Add(new RegionInfo 
+                    { 
+                        Id = region.Id, 
+                        Title = !string.IsNullOrEmpty(region.Title) ? region.Title : region.Id,
+                        Body = clrPage.GetType().GetProperty(region.Id, App.PropertyBindings).GetValue(clrPage)
+                    });
+                }
+                foreach (var region in model.PageType.Regions.Where(r => r.Position == Piranha.Models.RegionTypePosition.BeforeBody))
+                {
+                    model.PinnedRegions.BeforeBody.Add(new RegionInfo 
+                    { 
+                        Id = region.Id, 
+                        Title = !string.IsNullOrEmpty(region.Title) ? region.Title : region.Id,
+                        Body = clrPage.GetType().GetProperty(region.Id, App.PropertyBindings).GetValue(clrPage)
+                    });
+                }
+                foreach (var region in model.PageType.Regions.Where(r => r.Position == Piranha.Models.RegionTypePosition.AfterBody))
+                {
+                    model.PinnedRegions.AfterBody.Add(new RegionInfo 
+                    { 
+                        Id = region.Id,
+                        Title = !string.IsNullOrEmpty(region.Title) ? region.Title : region.Id,
+                        Body = clrPage.GetType().GetProperty(region.Id, App.PropertyBindings).GetValue(clrPage)
+                    });
+                }
+                foreach (var region in model.PageType.Regions.Where(r => r.Position == Piranha.Models.RegionTypePosition.NotSpecified))
+                {
+                    model.PinnedRegions.UnPinned.Add(new RegionInfo 
+                    { 
+                        Id = region.Id, 
+                        Title = !string.IsNullOrEmpty(region.Title) ? region.Title : region.Id,
+                        Body = clrPage.GetType().GetProperty(region.Id, App.PropertyBindings).GetValue(clrPage)
+                    });
+                }
+            }
         }
 
         /// <summary>

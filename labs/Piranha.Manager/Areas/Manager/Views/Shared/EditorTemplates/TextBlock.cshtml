@@ -1,0 +1,11 @@
+@model Piranha.Extend.Blocks.TextBlock
+@{
+    var prefix = Html.ViewData.TemplateInfo.HtmlFieldPrefix
+        .Replace("[", "_").Replace("]", "_").Replace(".", "_");
+    var isEmpty = string.IsNullOrWhiteSpace(Model.Body.Value);
+}
+
+@Html.HiddenFor(m => m.Body.Value, "")
+<div class="content-preview block-text">
+    <pre class="editor-area quote @(isEmpty ? "empty" : "check-empty")" contenteditable="true" data-id="@(prefix)_Body_Value">@(!string.IsNullOrWhiteSpace(Model.Body.Value) ? Model.Body.Value : "")</pre>
+</div>

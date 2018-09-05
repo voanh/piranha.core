@@ -33,7 +33,7 @@
         </nav>
 
         @Html.DisplayFor(m => Model.PinnedRegions.BeforeTitle)
-        @Html.TextBoxFor(m => m.Title, new { @class = "title" })
+        @Html.TextBoxFor(m => m.Title, new { @class = "title", placeholder = "Add your new Page title here" })
         @Html.DisplayFor(m => Model.PinnedRegions.BeforeBody)
         <div class="blocks">
             @Html.EditorFor(m => m.Blocks)

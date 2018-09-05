@@ -1,6 +1,6 @@
 @model Piranha.Manager.TestPage.HeaderRegion
 
-<div class="card header-region" style="background-image:url('@Url.Content(Model.Background.Media.PublicUrl)')">
+<div class="card header-region" style="@(Model.Background.HasValue ? $"background-image:url('{Url.Content(Model.Background.Media.PublicUrl)}')" : "")">
     <div class="card-body text-center">
         @if (!string.IsNullOrEmpty(Model.SubTitle))
         {
