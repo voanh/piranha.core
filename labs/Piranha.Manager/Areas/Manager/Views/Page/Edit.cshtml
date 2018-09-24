@@ -1,28 +1,41 @@
 @model Piranha.Manager.Models.PageEditModel
 
-@section topnav 
+@using (var form = Html.BeginForm("Save", "Page", FormMethod.Post, new { @class = "main-form", autocomplete = "off" })) 
 {
-    @if (Model.PinnedRegions.UnPinned.Count > 0)
-    {
-        <li>
-            <div class="btn-group" role="group">
-                <button id="btnContent" type="button" class="btn btn-sm btn-labeled btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-table"></i>Regions
-                </button>
-                <div class="dropdown-menu" aria-labelledby="btnContent">
-                    @foreach (var region in Model.PinnedRegions.UnPinned)
-                    {
-                        <a class="dropdown-item btn-panel-region" data-id="#region-@region.Id" href="#">@region.Id</a>
-                    }
-                </div>
-            </div>
-        </li>
-    }
-    <li><button class="btn btn-sm btn-success"><i class="fas fa-check"></i></button></li>
-    <li><button class="btn btn-sm btn-primary btn-panel-settings"><i class="fas fa-cog"></i></button></li>
-}
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.OriginalPageId)
+    @Html.HiddenFor(m => m.SiteId)
+    @Html.HiddenFor(m => m.TypeId)
+    @Html.HiddenFor(m => m.ContentType)
+    @Html.HiddenFor(m => m.ParentId)
+    @Html.HiddenFor(m => m.SortOrder)
 
-<form autocomplete="off" method="post">
+    <div class="top-nav">
+        <nav>
+            <ul class="navbar-nav">
+                @if (Model.PinnedRegions.UnPinned.Count > 0)
+                {
+                    <li>
+                        <div class="btn-group" role="group">
+                            <button id="btnContent" type="button" class="btn btn-sm btn-labeled btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-table"></i>Regions
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="btnContent">
+                                @foreach (var region in Model.PinnedRegions.UnPinned)
+                                {
+                                    <a class="dropdown-item btn-panel-region" data-id="#region-@region.Id" href="#">@region.Id</a>
+                                }
+                            </div>
+                        </div>
+                    </li>
+                }
+                <li><button class="btn btn-sm btn-success" type="submit"><i class="fas fa-check"></i></button></li>
+                <li><button class="btn btn-sm btn-primary btn-panel-settings"><i class="fas fa-cog"></i></button></li>
+            </ul>
+        </nav>            
+    </div>
+
     <div class="body-content">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -33,17 +46,21 @@
         </nav>
 
         @Html.DisplayFor(m => Model.PinnedRegions.BeforeTitle)
-        @Html.TextBoxFor(m => m.Title, new { @class = "title", placeholder = "Add your new Page title here" })
+        <input asp-for="Title" class="title" placeholder="Add your new Page title here" />
         @Html.DisplayFor(m => Model.PinnedRegions.BeforeBody)
         <div class="blocks">
             @Html.EditorFor(m => m.Blocks)
         </div>
         @Html.DisplayFor(m => Model.PinnedRegions.AfterBody)
     </div>
-    @Html.Partial("Partial/_PanelBlocks")
-    @Html.Partial("Partial/_PanelMedia")
-    @Html.Partial("Partial/_PanelSettings")
+    <partial name="Partial/_PanelBlocks" />
+    <partial name="Partial/_PanelMedia" />
+    <partial name="Partial/_PanelSettings" />
     @Html.EditorFor(m => m.Regions)
+
+    <div class="notification notification-success">
+        <p><strong>Success: </strong> The page was saved</p>
+    </div>
 
     @section script
     {
@@ -53,4 +70,4 @@
             });
         </script>
     }
-</form>
+}

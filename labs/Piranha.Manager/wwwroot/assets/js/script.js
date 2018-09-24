@@ -1156,20 +1156,89 @@ piranha.blocks = new function() {
 
                         // Unhide
                         $('.blocks .loading').removeClass('loading');
+
+                        // Recalc form indexes
+                        self.recalcBlocks();
                     }
                 });
             } else {
-                //
-                // Existing block changed position in the list.
-                //
+                // Recalc form indexes
+                self.recalcBlocks();
             }
         });
+    };
+
+    self.recalcBlocks = function () {
+        var items = $('.body-content .blocks > .block');
+
+        for (var n = 0; n < items.length; n++) {
+            var inputs = $(items.get(n)).find('input, textarea, select');
+
+            inputs.attr('id', function (i, val) {
+                if (val)
+                    return val.replace(/Blocks_\d+__/, 'Blocks_' + n + '__');
+                return val;
+            });
+            inputs.attr('name', function (i, val) {
+                if (val)
+                    return val.replace(/Blocks\[\d+\]/, 'Blocks[' + n + ']');
+                return val;
+            });
+
+            var content = $(items.get(n)).find('[contenteditable=true]');
+            content.attr('data-id', function (i, val) {
+                if (val)
+                    return val.replace(/Blocks_\d+__/, 'Blocks_' + n + '__');
+                return val;
+            });
+
+            var media = $(items.get(n)).find('button');
+            media.attr('data-mediaid', function (i, val) {
+                if (val)
+                    return val.replace(/Blocks_\d+__/, 'Blocks_' + n + '__');
+                return val;
+            });
+
+            var subitems = $(items.get(n)).find('.block-group-body .sortable-item');
+
+            for (var s = 0; s < subitems.length; s++) {
+                var subInputs = $(subitems.get(s)).find('input, textarea, select');
+
+                subInputs.attr('id', function (i, val) {
+                    if (val)
+                        return val.replace(/Blocks_\d+__Items_\d+__/, 'Blocks_' + n + '__Items_' + s + '__');
+                    return val;
+                });
+                subInputs.attr('name', function (i, val) {
+                    if (val)
+                        return val.replace(/Blocks\[\d+\].Items\[\d+\]/, 'Blocks[' + n + '].Items[' + s + ']');
+                    return val;
+                });
+
+                var subContent = $(subitems.get(s)).find('[contenteditable=true]');
+                subContent.attr('data-id', function (i, val) {
+                    if (val)
+                        return val.replace(/Blocks_\d+__Items_\d+__/, 'Blocks_' + n + '__Items_' + s + '__');
+                    return val;
+                });
+
+                var subContent = $(subitems.get(s)).find('button');
+                subContent.attr('data-mediaid', function (i, val) {
+                    if (val)
+                        return val.replace(/Blocks_\d+__Items_\d+__/, 'Blocks_' + n + '__Items_' + s + '__');
+                    return val;
+                });                    
+            }
+        }
     };
 
     $(document).on('click', '.block-remove', function (e) {
         e.preventDefault();
 
         $(this).closest('.block').remove();
+
+        // Recalc form indexes
+        self.recalcBlocks();
     });
 
     $(document).on('focus', '.block .empty', function () {
@@ -1220,5 +1289,28 @@ $(function () {
         e.preventDefault();
         console.log($($(this).data('id')));
         $($(this).data('id')).toggleClass('active');
+    });
+
+    $('.notification').each(function () {
+        var note = $(this);
+
+        setTimeout(function () {
+            note.addClass('visible');
+
+            setTimeout(function () {
+                note.removeClass('visible');
+            }, 2500);
+        }, 200);
+    });
+
+    $('form').submit(function (e) {
+        // Copy all contenteditable fields to their
+        // form element.
+        $('.editor-area').each(function () {
+            $('#' + $(this).attr('data-id')).val($(this).html());
+        });    
+
+        // Move along and submit the form
+        return true;
     });
 });

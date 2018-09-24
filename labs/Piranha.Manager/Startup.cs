@@ -35,8 +35,10 @@ namespace Piranha.Manager
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+            services.AddMvc(config => 
+            {
+                config.ModelBinderProviders.Insert(0, new Piranha.Manager.Binders.AbstractModelBinderProvider());
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddPiranhaFileStorage();
             services.AddPiranhaEF(options => options.UseSqlite("Filename=./piranha.labs.db"));
 

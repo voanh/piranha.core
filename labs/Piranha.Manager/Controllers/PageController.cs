@@ -19,12 +19,10 @@ namespace Piranha.Manager.Controllers
     public class PageController : Controller
     {
         private readonly Services.PageEditService _service;
-        private readonly IContentService<Data.Page, Data.PageField, Piranha.Models.PageBase> _contentService;
 
-        public PageController(Services.PageEditService service, IContentServiceFactory factory)
+        public PageController(Services.PageEditService service)
         {
             _service = service;
-            _contentService = factory.CreatePageService();
         }
 
         [Route("manager/pages")]
@@ -51,6 +49,25 @@ namespace Piranha.Manager.Controllers
             if (model != null)
                 return View(model);
             return NotFound();
+        }
+
+        [Route("manager/page/save")]
+        [HttpPost]
+        public IActionResult Save(Models.PageEditModel model)
+        {
+            // Validate
+            if (string.IsNullOrWhiteSpace(model.Title)) {
+                return BadRequest();
+            }
+
+            var ret = _service.Save(model, out var alias);
+
+            // Save
+            if (ret) {
+                return RedirectToAction("Edit", new { id = model.Id });
+            } else {
+                return StatusCode(500);
+            }
         }
     }
 }

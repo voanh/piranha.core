@@ -1,0 +1,43 @@
+@import "colors";
+
+.notification {
+    position: fixed;
+    bottom: -3rem;
+    left: 4.5rem;
+    color: #fff;
+    padding: 1rem 1rem 0;
+    border-radius: .25rem;
+    max-width: 320px;
+    font-size: .8rem;
+    opacity: 0;
+    z-index: 2000;
+    transition: all .2s ease-in-out;
+
+    &.visible {
+        opacity: 1;
+        bottom: 1rem;
+        transition: all .2s ease-in-out;
+    }
+
+    p {
+        opacity: .9;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        bottom: -16px;
+        left: 1rem;
+        border: solid 8px transparent;
+    }    
+
+    &.notification-success {
+        background: $color_success;
+
+        &::after {
+            border-top-color: $color_success;
+        }
+    }
+}

@@ -23,10 +23,10 @@ namespace Piranha.Manager
     {
         public class HeaderRegion
         {
-            [Field(Options = FieldOption.HalfWidth)]
+            [Field(Options = FieldOption.HalfWidth, Placeholder = "Mandatory title")]
             public StringField Title { get; set; }
 
-            [Field(Title = "Sub title", Options = FieldOption.HalfWidth)]
+            [Field(Title = "Sub title", Options = FieldOption.HalfWidth, Placeholder = "Optional sub title")]
             public StringField SubTitle { get; set; }
 
             [Field(Title = "Background image")]
@@ -39,5 +39,9 @@ namespace Piranha.Manager
         [Region(Position = RegionTypePosition.BeforeBody)]
         [RegionDescription("The Header shows an optional Hero banner on the page. If you leave all fields empty the header will be omitted from the current page.")]
         public HeaderRegion Header { get; set; }
+
+        [Region(Title = "Test Region")]
+        [RegionDescription("This is the same region as the header but unpinned.")]
+        public HeaderRegion TestRegion { get; set; }
     }
 }
