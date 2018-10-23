@@ -59,7 +59,15 @@ namespace Piranha.Repositories
         /// </summary>
         /// <param name="siteId">The optional site id</param>
         /// <returns>The pages</returns>
-        IEnumerable<T> GetAllBlogs<T>(Guid? siteId = null) where T : Models.PageBase;        
+        IEnumerable<T> GetAllBlogs<T>(Guid? siteId = null) where T : Models.PageBase;
+
+        /// <summary>
+        /// Gets the available revisions for the page with the
+        /// given id.
+        /// </summary>
+        /// <param name="pageId">The unique page id</param>
+        /// <returns>The available revisions</returns>
+        IEnumerable<Models.RevisionInfo> GetRevisions(Guid pageId);
 
         /// <summary>
         /// Gets the site startpage.
@@ -117,6 +125,18 @@ namespace Piranha.Repositories
         Guid? GetIdBySlug(string slug, Guid? siteId = null);
 
         /// <summary>
+        /// Gets the revision with the specified id.
+        /// </summary>
+        /// <param name="id">The unique revision id</param>
+        /// <returns>The page model</returns>
+        Models.DynamicPage GetRevisionById(Guid id);
+
+        /// </summary>
+        /// <param name="id">The unique revision id</param>
+        /// <returns>The page model</returns>
+        T GetRevisionById<T>(Guid id) where T : Models.PageBase;
+
+        /// <summary>
         /// Moves the current page in the structure.
         /// </summary>
         /// <typeparam name="T">The model type</typeparam>
@@ -142,5 +162,12 @@ namespace Piranha.Repositories
         /// </summary>
         /// <param name="model">The model</param>
         void Delete<T>(T model) where T : Models.PageBase;
+
+        /// <summary>
+        /// Deletes all available revisions for the page
+        /// with the specified id.
+        /// </summary>
+        /// <param name="pageId">The unique page id</param>
+        void DeleteRevisions(Guid pageId);
     }
 }

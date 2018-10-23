@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
+using Newtonsoft.Json;
 
 namespace Piranha.Repositories
 {
@@ -161,6 +162,26 @@ namespace Piranha.Repositories
                     models.Add(model);
             }
             return models;            
+        }
+
+        /// <summary>
+        /// Gets the available revisions for the page with the
+        /// given id.
+        /// </summary>
+        /// <param name="pageId">The unique page id</param>
+        /// <returns>The available revisions</returns>
+        public IEnumerable<Models.RevisionInfo> GetRevisions(Guid pageId)
+        {
+            return db.PageRevisions
+                .AsNoTracking()
+                .Where(r => r.PageId == pageId)
+                .OrderByDescending(r => r.Created)
+                .Select(r => new Models.RevisionInfo
+                {
+                    Id = r.Id,
+                    ContentId = r.PageId,
+                    Created = r.Created
+                }).ToList();
         }
 
         /// <summary>
@@ -319,6 +340,40 @@ namespace Piranha.Repositories
                     return page.Id;
                 return null;                
             }
+        }
+
+        /// <summary>
+        /// Gets the revision with the specified id.
+        /// </summary>
+        /// <param name="id">The unique revision id</param>
+        /// <returns>The page model</returns>
+        public Models.DynamicPage GetRevisionById(Guid id)
+        {
+            return GetRevisionById<Models.DynamicPage>(id);
+        }
+
+        /// </summary>
+        /// <param name="id">The unique revision id</param>
+        /// <returns>The page model</returns>
+        public T GetRevisionById<T>(Guid id) where T : Models.PageBase
+        {
+            var revision = db.PageRevisions
+                .AsNoTracking()
+                .FirstOrDefault(r => r.Id == id);
+            
+            if (revision != null)
+            {
+                var page = JsonConvert.DeserializeObject<Page>(revision.Data);
+
+                if (page != null)
+                {
+                    if (page.OriginalPageId.HasValue)
+                        return MapOriginalPage<T>(page);
+
+                    return contentService.Transform<T>(page, api.PageTypes.GetById(page.PageTypeId), Process);                
+                }
+            }
+            return null;
         }
 
         /// <summary>
@@ -586,6 +641,55 @@ namespace Piranha.Repositories
                 if (shouldUpdateSiteDate)
                     site.ContentLastModified = DateTime.Now;
 
+                if (page.Published.HasValue)
+                {
+                    // Check if we're updating an already published page.
+                    // If we are, let's save the old version as a revision.
+                    var oldPage = db.Pages
+                        .AsNoTracking()
+                        .Include(p => p.Blocks).ThenInclude(b => b.Block).ThenInclude(b => b.Fields)
+                        .Include(p => p.Fields)
+                        .FirstOrDefault(p => p.Id == model.Id && p.Published.HasValue);
+                    
+                    if (oldPage != null)
+                    {
+                        db.PageRevisions.Add(new PageRevision
+                        {
+                            Id = Guid.NewGuid(),
+                            PageId = model.Id,
+                            Data = JsonConvert.SerializeObject(oldPage),
+                            Created = oldPage.LastModified
+                        });
+                    }
+                }
+                else
+                {
+                    // We're saving a draft, check if the page is published
+                    // and if so, create or update a working copy.
+                    var oldPage = db.Pages
+                        .AsNoTracking()
+                        .FirstOrDefault(p => p.Id == model.Id && p.Published.HasValue);
+                    
+                    if (oldPage != null)
+                    {
+                        var workingCopy = db.PageRevisions
+                            .Where(p => p.PageId == model.Id && p.Created > oldPage.LastModified)
+                            .OrderByDescending(p => p.Created)
+                            .FirstOrDefault();
+
+                        if (workingCopy == null)
+                        {
+                            workingCopy = new PageRevision
+                            {
+                                Id = Guid.NewGuid(),
+                                PageId = model.Id
+                            };
+                            db.PageRevisions.Add(workingCopy);
+                        }
+                        workingCopy.Data = JsonConvert.SerializeObject(page);
+                        workingCopy.Created = DateTime.Now;
+                    }
+                }
                 db.SaveChanges();
 
                 if (cache != null)
@@ -647,6 +751,22 @@ namespace Piranha.Repositories
         /// <param name="model">The model</param>
         public virtual void Delete<T>(T model) where T : Models.PageBase {
             Delete(model.Id);
+        }
+
+        /// <summary>
+        /// Deletes all available revisions for the page
+        /// with the specified id.
+        /// </summary>
+        /// <param name="pageId">The unique page id</param>
+        public void DeleteRevisions(Guid pageId)
+        {
+            var revisions = db.PageRevisions
+                .Where(r => r.PageId == pageId)
+                .ToList();
+
+            if (revisions.Count > 0)
+                db.PageRevisions.RemoveRange(revisions);
+            db.SaveChanges();
         }
 
         /// <summary>

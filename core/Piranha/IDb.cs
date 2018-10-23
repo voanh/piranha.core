@@ -69,6 +69,11 @@ namespace Piranha
         DbSet<Data.PageField> PageFields { get; set; }
 
         /// <summary>
+        /// Gets/sets the page revision set.
+        /// </summary>
+        DbSet<Data.PageRevision> PageRevisions { get; set; }
+
+        /// <summary>
         /// Gets/sets the page type set.
         /// </summary>
         DbSet<Data.PageType> PageTypes { get; set; }

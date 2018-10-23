@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Piranha.Data
 {
@@ -64,6 +65,7 @@ namespace Piranha.Data
         /// <summary>
         /// Gets/sets the available page connections.
         /// </summary>
+        [JsonIgnore] 
         public IList<PageBlock> PageBlocks { get; set; }
 
         /// <summary>

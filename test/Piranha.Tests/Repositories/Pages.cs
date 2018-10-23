@@ -950,5 +950,119 @@ namespace Piranha.Tests.Repositories
                 Assert.Equal("Can not delete page because it has copies", exn.Message);
             }
         }
+
+        [Fact]
+        public void SavingDraftShouldNotCreateRevision()
+        {
+            using (var api = new Api(GetDb(), new ContentServiceFactory(services), storage, cache)) {
+                var id = Guid.NewGuid();
+
+                var page = MyPage.Create(api);
+                page.Id = id;
+                page.SiteId = SITE_ID;
+                page.Title = "Revision test page 1";
+                api.Pages.Save(page);
+
+                var revisions = api.Pages.GetRevisions(page.Id);
+
+                Assert.Empty(revisions);
+            }
+        }
+
+        [Fact]
+        public void PublishingShouldNotCreateRevision()
+        {
+            using (var api = new Api(GetDb(), new ContentServiceFactory(services), storage, cache)) {
+                var id = Guid.NewGuid();
+
+                var page = MyPage.Create(api);
+                page.Id = id;
+                page.SiteId = SITE_ID;
+                page.Title = "Revision test page 2";
+                page.Published = DateTime.Now;
+                api.Pages.Save(page);
+
+                var revisions = api.Pages.GetRevisions(page.Id);
+
+                Assert.Empty(revisions);
+            }
+        }
+
+        [Fact]
+        public void UpdateShouldCreateRevision()
+        {
+            using (var api = new Api(GetDb(), new ContentServiceFactory(services), storage, cache)) {
+                var id = Guid.NewGuid();
+
+                var page = MyPage.Create(api);
+                page.Id = id;
+                page.SiteId = SITE_ID;
+                page.Title = "Revision test page 3";
+                page.Published = DateTime.Now;
+                api.Pages.Save(page);
+
+                page.Title = "Revision test page 3 updated";
+                api.Pages.Save(page);
+
+                var revisions = api.Pages.GetRevisions(page.Id);
+
+                Assert.Single(revisions);
+            }
+        }
+
+        [Fact]
+        public void GetRevisionById()
+        {
+            using (var api = new Api(GetDb(), new ContentServiceFactory(services), storage, cache)) {
+                var id = Guid.NewGuid();
+
+                var page = MyPage.Create(api);
+                page.Id = id;
+                page.SiteId = SITE_ID;
+                page.Title = "Revision test page 4";
+                page.Published = DateTime.Now;
+                api.Pages.Save(page);
+
+                page.Title = "Revision test page 4 updated";
+                api.Pages.Save(page);
+
+                var revisions = api.Pages.GetRevisions(page.Id);
+
+                Assert.Single(revisions);
+
+                var revision = api.Pages.GetRevisionById<MyPage>(revisions.First().Id);
+
+                Assert.NotNull(revision);
+                Assert.Equal("Revision test page 4", revision.Title);
+            }
+        }
+
+        [Fact]
+        public void DeleteRevisions()
+        {
+            using (var api = new Api(GetDb(), new ContentServiceFactory(services), storage, cache)) {
+                var id = Guid.NewGuid();
+
+                var page = MyPage.Create(api);
+                page.Id = id;
+                page.SiteId = SITE_ID;
+                page.Title = "Revision test page 5";
+                page.Published = DateTime.Now;
+                api.Pages.Save(page);
+
+                page.Title = "Revision test page 5 updated";
+                api.Pages.Save(page);
+
+                var revisions = api.Pages.GetRevisions(page.Id);
+
+                Assert.Single(revisions);
+
+                api.Pages.DeleteRevisions(page.Id);
+                revisions = api.Pages.GetRevisions(page.Id);
+
+                Assert.Empty(revisions);
+            }
+
+        }
     }
 }

@@ -262,7 +262,8 @@ namespace Piranha
                                 .ForMember(p => p.LastModified, o => o.Ignore())
                                 .ForMember(p => p.PageType, o => o.Ignore())
                                 .ForMember(p => p.Site, o => o.Ignore())
-                                .ForMember(p => p.Parent, o => o.Ignore());
+                                .ForMember(p => p.Parent, o => o.Ignore())
+                                .ForMember(p => p.Revisions, o => o.Ignore());
                             cfg.CreateMap<Data.Page, Models.SitemapItem>()
                                 .ForMember(p => p.MenuTitle, o => o.Ignore())
                                 .ForMember(p => p.Level, o => o.Ignore())
