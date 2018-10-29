@@ -298,9 +298,11 @@ namespace Piranha
                                 .ForMember(s => s.Description, o => o.Ignore())
                                 .ForMember(s => s.Hostnames, o => o.Ignore())
                                 .ForMember(s => s.IsDefault, o => o.Ignore())
+                                .ForMember(s => s.Culture, o => o.Ignore())
                                 .ForMember(s => s.Fields, o => o.Ignore())
                                 .ForMember(s => s.Created, o => o.Ignore())
-                                .ForMember(s => s.LastModified, o => o.Ignore());
+                                .ForMember(s => s.LastModified, o => o.Ignore())
+                                .ForMember(s => s.ContentLastModified, o => o.Ignore());
                             cfg.CreateMap<Data.Tag, Data.Tag>()
                                 .ForMember(t => t.Id, o => o.Ignore())
                                 .ForMember(t => t.Created, o => o.Ignore());
@@ -317,7 +319,7 @@ namespace Piranha
 
                         // Compose content types
                         _contentTypes.Register<Models.IPage>("Page", "Page");
-                        _contentTypes.Register<Models.IBlogPage>("Blog", "Archive", true);
+                        _contentTypes.Register<Models.IArchivePage>("Blog", "Archive", true);
 
                         // Compose field types
                         _fields.Register<Extend.Fields.CheckBoxField>();

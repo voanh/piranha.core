@@ -76,7 +76,7 @@ namespace Piranha.AttributeBuilder
                 if (descAttr != null)
                 {
                     regionType.Description = descAttr.Text;
-                }
+                }                
 
                 Type type = null;
 
