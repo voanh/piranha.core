@@ -137,6 +137,12 @@
             min-height: 3.2rem;
         }
     }
+
+    .block-text {
+        pre {
+            white-space: normal;
+        }
+    }
     
     &:hover {
         border-color: $color_border;
