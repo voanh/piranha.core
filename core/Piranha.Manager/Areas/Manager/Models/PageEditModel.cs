@@ -42,6 +42,11 @@ namespace Piranha.Areas.Manager.Models
         public Runtime.AppContentType PageContentType { get; set; }
 
         /// <summary>
+        /// Gets/sets the available revisions.
+        /// </summary>
+        public IEnumerable<Piranha.Models.RevisionInfo> Revisions { get; set; } = new List<Piranha.Models.RevisionInfo>();
+
+        /// <summary>
         /// Default constructor.
         /// </summary>
         public PageEditModel() {

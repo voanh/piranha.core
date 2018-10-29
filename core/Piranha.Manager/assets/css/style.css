@@ -13044,14 +13044,19 @@ li.sitemap-item .actions.one {
   width: auto;
 }
 .col-sm-12.buttons.buttons-fixed {
+  position: fixed;
+  width: 308px;
+  left: 1112px;
+  margin-top: -65px;
+  z-index: 1800;
+}
+.col-sm-12.buttons.buttons-fixed .dimmer {
   background: #f2f2f2;
   background: rgba(242, 242, 242, 0.85);
-  position: fixed;
-  left: 1152px;
+  position: absolute;
+  right: 0;
   padding: 15px;
-  margin-top: -65px;
   white-space: nowrap;
-  z-index: 1800;
 }
 .col-sm-12.buttons.buttons-fixed #main-submit .btn-text {
   display: inline-block;

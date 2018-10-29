@@ -287,14 +287,20 @@
 	width: auto;
 
 	&.buttons-fixed {
-		background: @bg-color;
-		background: rgba(242,242,242,.85);
 		position: fixed;
-		left: 1152px;
-		padding: 15px;
+		width: 308px;
+		left: 1112px;
 		margin-top: -65px;
-		white-space: nowrap;
-		z-index: 1800;		
+		z-index: 1800;	
+		
+		.dimmer {
+			background: @bg-color;
+			background: rgba(242,242,242,.85);
+			position: absolute;
+			right: 0;
+			padding: 15px;
+			white-space: nowrap;	
+		}
 
 		#main-submit {
 			.btn-text {

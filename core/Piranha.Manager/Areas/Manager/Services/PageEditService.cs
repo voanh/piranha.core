@@ -80,6 +80,8 @@ namespace Piranha.Areas.Manager.Services
                 LoadRegions(page, model);
                 LoadBlocks(page, model);
 
+                model.Revisions = api.Pages.GetRevisions(id);
+
                 return model;
             }
             throw new KeyNotFoundException($"No page found with the id '{id}'");

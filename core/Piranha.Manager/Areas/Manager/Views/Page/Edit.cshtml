@@ -250,7 +250,7 @@
 
     <div class="form-dimmer"></div>
     <div class="row">
-        <div class="col-sm-12 buttons buttons-fixed">
+        <div class="col-sm-12 buttons buttons-fixed"><div class="dimmer">
             <!-- Back -->
             <a href="@Url.Action("List", "Page", new { pageId = Model.Id })" class="btn btn-info btn-icon">
                 <span class="fas fa-angle-left"></span>
@@ -259,6 +259,14 @@
             <button id="btn-settings" type="button" class="btn btn-primary btn-icon">
                 <span class="fas fa-cog"></span>
             </button>
+
+            @if (Model.Revisions.Count() > 0)
+            {
+                <!-- Revisions -->
+                <button id="btn-revisions" type="button" class="btn btn-primary btn-icon" data-toggle="modal" data-target="#modalRevisions">
+                    <span class="fas fa-history"></span>
+                </button>
+            }
 
             <!-- Actions -->
             <div class="btn-group">
@@ -303,7 +311,7 @@
                     }
                 </ul>
             </div>
-        </div>
+        </div></div>
     </div>
 
     @if (!string.IsNullOrWhiteSpace(ViewBag.Message)) {
@@ -414,4 +422,26 @@
             </div>
         }
     </div>
+    <div id="modalRevisions" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Revisions</h4>
+                </div>
+                <table class="table table-striped">
+                    <tbody>
+                        @foreach (var revision in Model.Revisions)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="#">Created @revision.Created.ToString("yyyy-MM-dd HH:mm")</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 }

@@ -24299,7 +24299,7 @@ var manager = {
         positionButtonsFixed: function() {
             var diff = 1420 - $(window).width();
 
-            $('.buttons-fixed').css({ left: Math.min(1152, 1152 - diff) });
+            $('.buttons-fixed').css({ left: Math.min(1112, 1112 - diff) });
         }
     }
 };
