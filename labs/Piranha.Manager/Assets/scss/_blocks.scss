@@ -58,6 +58,10 @@
                     transition: background-color .2s ease-in-out;
                 }
             }
+
+            &:active {
+                border-color: $bg;
+            }
         }
     }
 
@@ -164,12 +168,14 @@
     padding: 2rem 1rem 1rem;
     margin-bottom: 1rem;
     position: relative;
+    overflow: hidden;
 
     &:hover {
         border-color: $bg_panel;
 
         .block-group-preview {
-            display: none;
+            opacity: 0.2;
+            transform: translateY(100%);
         }
     }
 
@@ -182,6 +188,10 @@
     .block-buttons {
         .btn {
             border-color: $bg_panel;
+
+            &:active {
+                border-color: $bg_panel;
+            }
         }
     }
 
@@ -196,6 +206,8 @@
         top: 0;
         left: 0;
         z-index: 67000;
+        opacity: 1;
+        transition: all .2s ease-in-out;
     }
 
     .list-group-item {
