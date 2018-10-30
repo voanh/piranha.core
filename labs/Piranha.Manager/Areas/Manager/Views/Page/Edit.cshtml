@@ -49,6 +49,95 @@
         <input asp-for="Title" class="title" placeholder="Add your new Page title here" />
         @Html.DisplayFor(m => Model.PinnedRegions.BeforeBody)
         <div class="blocks">
+            <div class="block block-group">
+                <span class="block-label"><i class="fas fa-object-group"></i>Teasers</span>
+                <div class="block-buttons">
+                    <div class="btn btn-sm btn-secondary sortable-handle" data-toggle="tooltip" data-placement="bottom" title="Move"><span class="fas fa-ellipsis-v"></span></div>
+                    <button class="btn btn-sm btn-secondary block-remove" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash"></i></button>
+                </div>
+                <div class="block-group-header">
+                    <div class="content-area block-editor editor-area">
+                        <h2 class="text-center">Mollis Cursus Sem</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 block-group-list">
+                        <div class="list-group list-group-flush">
+                            <a href="#" class="list-group-item active">Cras justo odio</a>
+                            <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+                            <a href="#" class="list-group-item">Morbi leo risus</a>
+                            <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="content-area block-editor editor-area">
+                            <h3>Cras justo odio</h3>
+                            <p>
+                                Donec sed odio dui. Aenean eu leo quam. Pellentesque ornare sem lacinia quam 
+                                venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. 
+                                Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.                                
+                            </p>
+                            <p>
+                                Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed posuere consectetur est at lobortis.
+                            </p>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="block block-group">
+                <span class="block-label"><i class="fas fa-object-group"></i>Slider</span>
+                <div class="block-buttons">
+                    <div class="btn btn-sm btn-secondary sortable-handle" data-toggle="tooltip" data-placement="bottom" title="Move"><span class="fas fa-ellipsis-v"></span></div>
+                    <button class="btn btn-sm btn-secondary block-remove" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash"></i></button>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 block-group-list">
+                        <div class="list-group list-group-flush">
+                            <a href="#" class="list-group-item active">Cras justo odio</a>
+                            <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+                            <a href="#" class="list-group-item">Morbi leo risus</a>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        @{
+                            var image = new Piranha.Extend.Fields.ImageField();
+                        }
+                        <div class="form-group">
+                            <label>Background Image</label>
+                            @Html.EditorFor(m => image)
+                        </div>
+                        <div class="content-area block-editor editor-area">
+                            <h3>Cras justo odio</h3>
+                            <p>
+                                Donec sed odio dui. Aenean eu leo quam. Pellentesque ornare sem lacinia quam 
+                                venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. 
+                                Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.                                
+                            </p>
+                            <p>
+                                Donec sed odio dui. Aenean eu leo quam. Pellentesque ornare sem lacinia quam 
+                                venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. 
+                                Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.                                
+                            </p>
+                        </div>                        
+                    </div>
+                </div>
+                <div class="block-group-preview">
+                    <div style="position:absolute;width:100%;height:100%;background:url('/uploads/348dd2dc-5336-4653-942e-8eed9fda1250-heroimage.png') no-repeat;background-size:cover">
+                        <div class="row justify-content-center align-items-center" style="height:100%">
+                            <div class="col-sm-8 text-center" style="color:#fff;text-shadow:0 0 10px rgba(0,0,0,0.5)">
+                                <h3 style="margin-bottom:1rem;">Cras justo odio</h3>
+                                <p class="lead">
+                                    Donec sed odio dui. Aenean eu leo quam. Pellentesque ornare sem lacinia quam 
+                                    venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. 
+                                    Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.                                
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             @Html.EditorFor(m => m.Blocks)
         </div>
         @Html.DisplayFor(m => Model.PinnedRegions.AfterBody)

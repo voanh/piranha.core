@@ -7,5 +7,5 @@
 
 @Html.HiddenFor(m => m.Body.Value, "")
 <div class="content-preview block-text">
-    <pre class="editor-area quote @(isEmpty ? "empty" : "check-empty")" contenteditable="true" data-id="@(prefix)_Body_Value">@(!string.IsNullOrWhiteSpace(Model.Body.Value) ? Model.Body.Value : "")</pre>
+    <pre class="editor-area quote @(isEmpty ? "empty" : "check-empty")" contenteditable="true" data-id="@(prefix)_Body_Value">@(!string.IsNullOrWhiteSpace(Model.Body.Value) ? Html.Raw(Model.Body.Value) : Html.Raw(""))</pre>
 </div>

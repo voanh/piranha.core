@@ -2,6 +2,7 @@ $(function () {
     $('[data-toggle="popover"]').popover({
         trigger: 'hover'
     });
+    $('[data-toggle="tooltip"]').tooltip();
 
     $('.panel-close').click(function (e) {
         e.preventDefault();

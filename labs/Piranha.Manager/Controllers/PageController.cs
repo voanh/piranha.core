@@ -16,22 +16,34 @@ using Piranha.Services;
 namespace Piranha.Manager.Controllers
 {
     [Area("Manager")]
+    [Route("manager")]
     public class PageController : Controller
     {
         private readonly Services.PageEditService _service;
 
+        /// <summary>
+        /// Default controller.
+        /// </summary>
+        /// <param name="service">The main page edit service</param>
         public PageController(Services.PageEditService service)
         {
             _service = service;
         }
 
-        [Route("manager/pages")]
+        /// <summary>
+        /// Gets the sitemap view for the pages.
+        /// </summary>
+        [Route("pages")]
         public IActionResult Index()
         {
             return RedirectToAction("Edit", new { id = new Guid("a47bc4f1-1722-4e09-b596-ab25d7657afb") });
         }
 
-        [Route("manager/page/add/{type}")]
+        /// <summary>
+        /// Adds a new page of the specified type.
+        /// </summary>
+        /// <param name="type">The page type</param>
+        [Route("page/add/{type}")]
         public IActionResult Add(string type)
         {
             var model = _service.Create(type);
@@ -41,7 +53,11 @@ namespace Piranha.Manager.Controllers
             return NotFound();
         }
 
-        [Route("manager/page/{id:Guid}")]
+        /// <summary>
+        /// Edits the page with the given id.
+        /// </summary>
+        /// <param name="id">The page id</param>
+        [Route("page/{id:Guid}")]
         public IActionResult Edit(Guid id)
         {
             var model = _service.GetById(id);
@@ -51,7 +67,11 @@ namespace Piranha.Manager.Controllers
             return NotFound();
         }
 
-        [Route("manager/page/save")]
+        /// <summary>
+        /// Saves the given page model.
+        /// </summary>
+        /// <param name="model">The page model</param>
+        [Route("page/save")]
         [HttpPost]
         public IActionResult Save(Models.PageEditModel model)
         {

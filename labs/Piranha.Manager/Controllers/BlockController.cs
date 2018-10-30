@@ -16,6 +16,7 @@ using Piranha.Services;
 namespace Piranha.Manager.Controllers
 {
     [Area("Manager")]
+    [Route("manager")]
     public class BlockController : Controller
     {
         /// <summary>
@@ -33,8 +34,13 @@ namespace Piranha.Manager.Controllers
             _contentService = factory.CreatePageService();
         }
 
+        /// <summary>
+        /// Creates a new block from the given parameters and
+        /// returns a partial view for it.
+        /// </summary>
+        /// <param name="model">The model</param>
         [HttpPost]
-        [Route("manager/block/create")]
+        [Route("block/create")]
         public IActionResult CreateBlock([FromBody]Models.BlockCreateModel model)
         {
             var block = (Extend.Block)_contentService.CreateBlock(model.Type);
