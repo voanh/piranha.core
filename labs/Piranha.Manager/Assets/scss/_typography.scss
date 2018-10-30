@@ -14,3 +14,8 @@ a {
     padding: .5rem 1rem;
     border-left: solid 4px lighten($color_link, 50%);
 }
+
+.tooltip-inner {
+    font-size: .6rem;
+    text-transform: uppercase;
+}

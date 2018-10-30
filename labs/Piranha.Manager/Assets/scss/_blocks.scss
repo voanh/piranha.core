@@ -206,6 +206,17 @@
         &.active {
             background: $color_border;
         }
+
+        .delete {
+            opacity: 0;
+            transition: opacity .2s ease-in-out;
+        }
+
+        &:hover {
+            .delete {
+                opacity: 1;
+            }
+        }
     }
 }
 
