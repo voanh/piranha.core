@@ -1,0 +1,9 @@
+@model Piranha.Extend.Block
+
+@foreach (var field in Model.GetFields())
+{
+    <div class="form-group">
+        <label>@field</label>
+        @Html.Editor(field, new { IsBlock = true })
+    </div>
+}

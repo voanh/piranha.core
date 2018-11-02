@@ -22,5 +22,19 @@ namespace Piranha.Extend.Blocks
         /// Gets/sets the image body.
         /// </summary>
         public ImageField Body { get; set; }
+        
+        /// <summary>
+        /// Gets the list title if the block is used as
+        /// an item in a block group.
+        /// </summary>
+        /// <returns>The title</returns>
+        public override string GetTitle(IApi api)
+        {
+            if (Body != null && Body.HasValue)
+            {
+                return $"<img class=\"img-thumbnail\" src=\"{api.Media.EnsureVersion(Body.Id.Value, 30, 30).Replace("~", "")}\">{Body.Media.Filename}";
+            }
+            return "No Image Selected";
+        }        
     }
 }

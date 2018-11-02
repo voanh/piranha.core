@@ -1,19 +1,63 @@
 @model Piranha.Manager.Models.ContentEditBlock
+@inject Piranha.IApi Api
 @{
     Layout = null;
 
     var blockType = Piranha.App.Blocks.GetByType(Model.CLRType);
 }
 
-<div class="block">
-    @Html.HiddenFor(m => m.Id)
-    @Html.HiddenFor(m => m.CLRType)
-    @Html.HiddenFor(m => m.IsReusable)
-    @Html.HiddenFor(m => m.Value.Id)
-    <span class="block-label"><i class="@blockType.Icon"></i>@blockType.Name</span>
-    <div class="block-buttons">
-        <div class="btn btn-sm btn-secondary sortable-handle" data-toggle="tooltip" data-placement="bottom" title="Move"><span class="fas fa-ellipsis-v"></span></div>
-        <button class="btn btn-sm btn-secondary block-remove" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash"></i></button>
+@if (!Model.IsGroup)
+{
+    <div class="block">
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.CLRType)
+        @Html.HiddenFor(m => m.IsReusable)
+        @Html.HiddenFor(m => m.Value.Id)
+        <span class="block-label"><i class="@blockType.Icon"></i>@blockType.Name</span>
+        <div class="block-buttons">
+            <div class="btn btn-sm btn-secondary sortable-handle" data-toggle="tooltip" data-placement="bottom" title="Move"><span class="fas fa-ellipsis-v"></span></div>
+            <button class="btn btn-sm btn-secondary block-remove" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash"></i></button>
+        </div>
+        @Html.EditorFor(m => m.Value, Model.Value.GetType().Name)
     </div>
-    @Html.EditorFor(m => m.Value, Model.Value.GetType().Name)
-</div>
+}
+else
+{
+    <div class="block block-group">
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.CLRType)
+        @Html.HiddenFor(m => m.IsReusable)
+        @Html.HiddenFor(m => m.Value.Id)
+        <span class="block-label block-group-label"><i class="@blockType.Icon"></i>@blockType.Name</span>
+        <div class="block-buttons">
+            <div class="btn btn-sm btn-secondary sortable-handle" data-toggle="tooltip" data-placement="bottom" title="Move"><span class="fas fa-ellipsis-v"></span></div>
+            <button class="btn btn-sm btn-secondary block-remove" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash"></i></button>
+        </div>
+        <div class="row">
+            <div class="col-md-4 block-group-list">
+                <div class="list-group list-group-flush">
+                    @foreach (var item in Model.Items)
+                    {
+                        <a href="#" data-id="item_@item.Id" class="list-group-item @(item == Model.Items.First() ? "active" : "")">@Html.Raw(item.Value.GetTitle(Api))</a>
+                    }
+                </div>
+                <a href="#" class="btn btn-primary btn-sm btn-labeled">
+                    <i class="fas fa-plus"></i>
+                    Add Item
+                </a>                        
+            </div>
+            <div class="col-md-8">
+                @for (var n = 0; n < Model.Items.Count; n++)
+                {
+                    <div id="item_@Model.Items[n].Id" class="block-group-item @(n > 0 ? "d-none" : "")">
+                        @Html.HiddenFor(m => m.Items[n].Id)
+                        @Html.HiddenFor(m => m.Items[n].CLRType)
+                        @Html.HiddenFor(m => m.Items[n].IsReusable)
+                        @Html.HiddenFor(m => m.Items[n].Value.Id)
+                        @Html.EditorFor(m => m.Items[n].Value, Model.Items[n].Value.GetType().Name)
+                    </div>
+                }
+            </div>
+        </div>
+    </div>    
+}

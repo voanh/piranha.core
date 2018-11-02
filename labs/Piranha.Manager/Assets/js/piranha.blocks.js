@@ -21,8 +21,33 @@ piranha.blocks = new function() {
             acceptFrom: '.blocks,.block-types'
         });
 
+        // Create the block group lists
+        var groups = sortable('.block-group-list .list-group');
+
+        for (var n = 0; n < groups.length; n++) {
+            groups[n].addEventListener('sortupdate', function (e) {
+                // Get the destination index, the moved item and the block list
+                var destination = e.detail.destination.index;
+                var item = $('#' + $(e.detail.item).attr('data-id'));
+                var list = $(e.detail.item).closest('.block-group').find('.block-group-item');
+
+                // Detach the moved item from the block list
+                $(item).detach();
+
+                // Add it back to the destination position
+                if (destination > 0) {
+                    $(item).insertAfter(list.get(destination - 1));
+                } else {
+                    $(item).insertBefore(list.get(0));
+                }
+
+                // Recalc form indexes
+                self.recalcBlocks();                
+            });
+        }
+
         // Add sortable events
-        blocks[0].addEventListener('sortupdate', function(e) {
+        blocks[0].addEventListener('sortupdate', function (e) {
             var item = e.detail.item;
 
             if ($(item).hasClass('block-type')) {
@@ -104,7 +129,7 @@ piranha.blocks = new function() {
                 return val;
             });
 
-            var subitems = $(items.get(n)).find('.block-group-body .sortable-item');
+            var subitems = $(items.get(n)).find('.block-group-item');
 
             for (var s = 0; s < subitems.length; s++) {
                 var subInputs = $(subitems.get(s)).find('input, textarea, select');
@@ -151,10 +176,22 @@ piranha.blocks = new function() {
         $(this).addClass('check-empty');
     });
 
-    $(document).on('blur','.block .check-empty', function () {
+    $(document).on('blur', '.block .check-empty', function () {
         if (piranha.tools.isEmpty(this)) {
             $(this).removeClass('check-empty');    
             $(this).addClass('empty');
         }
-    });    
+    });
+
+    $(document).on('click', '.block-group-list a', function (e) {
+        e.preventDefault();
+
+        // Activate/deactivate list items
+        $(this).parent().find('.list-group-item').removeClass('active')
+        $(this).addClass('active');
+
+        // Hide/show item details
+        $(this).closest('.block-group').find('.block-group-item:not(.d-none)').addClass('d-none');
+        $('#' + $(this).attr('data-id')).removeClass('d-none');
+    });
 };

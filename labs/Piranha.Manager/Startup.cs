@@ -40,6 +40,7 @@ namespace Piranha.Manager
                 config.ModelBinderProviders.Insert(0, new Piranha.Manager.Binders.AbstractModelBinderProvider());
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddPiranhaFileStorage();
+            services.AddPiranhaImageSharp();
             services.AddPiranhaEF(options => options.UseSqlite("Filename=./piranha.labs.db"));
 
             // Should be packaged into a service extensions
@@ -65,7 +66,10 @@ namespace Piranha.Manager
             var pageTypeBuilder = new Piranha.AttributeBuilder.PageTypeBuilder(api)
                 .AddType(typeof(TestPage));
             pageTypeBuilder.Build()
-                .DeleteOrphans();            
+                .DeleteOrphans();
+
+            Piranha.App.Blocks.Register<Piranha.Manager.ExtraBlocks.SliderBlock>();
+            Piranha.App.Blocks.Register<Piranha.Manager.ExtraBlocks.SliderItemBlock>();
 
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -95,6 +99,15 @@ namespace Piranha.Manager
                     });
                 }
 
+                var drifterId = Guid.NewGuid();
+                using (var stream = File.OpenRead("Assets/img/drifter.jpg")) {
+                    api.Media.Save(new Piranha.Models.StreamMediaContent() {
+                        Id = drifterId,
+                        Filename = "drifter.jpg",
+                        Data = stream
+                    });
+                }
+
                 var page = TestPage.Create(api);
                 page.Id = new Guid("a47bc4f1-1722-4e09-b596-ab25d7657afb");
                 page.SiteId = site.Id;
@@ -102,6 +115,32 @@ namespace Piranha.Manager
                 page.Blocks.Add(new HtmlBlock 
                 {
                     Body = "<p>Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum id ligula porta felis euismod semper. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo.</p>"
+                });
+                page.Blocks.Add(new Piranha.Manager.ExtraBlocks.SliderBlock
+                {
+                    Items = new List<Piranha.Extend.Block>
+                    {
+                        new Piranha.Manager.ExtraBlocks.SliderItemBlock
+                        {
+                            BackgroundImage = imageId,
+                            Title = "Cras justo odio",
+                            SliderContent = "<p>Donec sed odio dui. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>"
+                        },
+                        new ImageBlock
+                        {
+                            Body = drifterId
+                        },
+                        new ImageBlock
+                        {
+                            Body = heroId
+                        },
+                        new Piranha.Manager.ExtraBlocks.SliderItemBlock
+                        {
+                            BackgroundImage = imageId,
+                            Title = "Morbi leo risus",
+                            SliderContent = "<p>Donec sed odio dui. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p><p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed posuere consectetur est at lobortis.</p>"
+                        }
+                    }
                 });
                 page.Blocks.Add(new ImageBlock
                 {

@@ -8,6 +8,7 @@
     right: 0;
     padding: .5rem 1rem;
     border-left: solid 4px $bg;
+    z-index: 67000;
     transition: right .2s ease-in-out;
 
     &.active, &:hover {
