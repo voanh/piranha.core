@@ -33,12 +33,26 @@ else
             <div class="btn btn-sm btn-secondary sortable-handle" data-toggle="tooltip" data-placement="bottom" title="Move"><span class="fas fa-ellipsis-v"></span></div>
             <button class="btn btn-sm btn-secondary block-remove" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash"></i></button>
         </div>
+        @{
+            var globalFields = Model.Value.GetFields();
+        }
+        @if (globalFields.Count() > 0)
+        {
+            <div class="block-group-header">
+                @Html.EditorFor(m => m.Value)
+            </div>
+        }
         <div class="row">
             <div class="col-md-4 block-group-list">
                 <div class="list-group list-group-flush">
                     @foreach (var item in Model.Items)
                     {
-                        <a href="#" data-id="item_@item.Id" class="list-group-item @(item == Model.Items.First() ? "active" : "")">@Html.Raw(item.Value.GetTitle(Api))</a>
+                        <a href="#" data-id="item_@item.Id" class="list-group-item @(item == Model.Items.First() ? "active" : "")">
+                            <div class="handle sortable-handle">
+                                <span class="fas fa-ellipsis-v"></span>
+                            </div>  
+                            @Html.Raw(item.Value.GetTitle(Api))
+                        </a>
                     }
                 </div>
                 <a href="#" class="btn btn-primary btn-sm btn-labeled">

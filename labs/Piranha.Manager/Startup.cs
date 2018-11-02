@@ -68,6 +68,7 @@ namespace Piranha.Manager
             pageTypeBuilder.Build()
                 .DeleteOrphans();
 
+            Piranha.App.Blocks.Register<Piranha.Manager.ExtraBlocks.GalleryBlock>();
             Piranha.App.Blocks.Register<Piranha.Manager.ExtraBlocks.SliderBlock>();
             Piranha.App.Blocks.Register<Piranha.Manager.ExtraBlocks.SliderItemBlock>();
 
@@ -116,6 +117,26 @@ namespace Piranha.Manager
                 {
                     Body = "<p>Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum id ligula porta felis euismod semper. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo.</p>"
                 });
+                page.Blocks.Add(new Piranha.Manager.ExtraBlocks.GalleryBlock
+                {
+                    Title = "Our Image Gallery",
+                    Description = "<p>Etiam porta sem malesuada magna mollis euismod. Vestibulum id ligula porta felis euismod semper. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>",
+                    Items = new List<Piranha.Extend.Block>
+                    {
+                        new ImageBlock
+                        {
+                            Body = drifterId
+                        },
+                        new ImageBlock
+                        {
+                            Body = heroId
+                        },
+                        new ImageBlock
+                        {
+                            Body = imageId
+                        }
+                    }
+                });
                 page.Blocks.Add(new Piranha.Manager.ExtraBlocks.SliderBlock
                 {
                     Items = new List<Piranha.Extend.Block>
@@ -125,14 +146,6 @@ namespace Piranha.Manager
                             BackgroundImage = imageId,
                             Title = "Cras justo odio",
                             SliderContent = "<p>Donec sed odio dui. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>"
-                        },
-                        new ImageBlock
-                        {
-                            Body = drifterId
-                        },
-                        new ImageBlock
-                        {
-                            Body = heroId
                         },
                         new Piranha.Manager.ExtraBlocks.SliderItemBlock
                         {

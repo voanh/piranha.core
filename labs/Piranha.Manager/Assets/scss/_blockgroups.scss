@@ -24,6 +24,7 @@
     .block-label {
         opacity: 1;
 
+        /*
         &.block-group-label {
             background: $color_link;
             color: #fff;
@@ -42,6 +43,7 @@
                 bottom: -.75rem;
             }
         }
+        */
     }
 
     .block-group-header {
@@ -72,6 +74,7 @@
                 background: transparent;
                 border-color: $color_border;
                 font-size: .875rem;
+                padding-left: 2.5rem;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
@@ -86,11 +89,33 @@
                     height: 40px;
                     margin-right: .5rem;
                 }
+
+                .sortable-handle {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 2rem;
+                    height: 100%;
+                    text-align: center;
+                    border-right: solid 1px $color_border;
+                
+                    span {
+                        color: $text_light;        
+                        position: absolute;
+                        top: 50%;
+                        margin-top: -.5rem;
+                        font-size: 1rem;
+                    }
+                }
         
                 &.active {
                     background: $color_border;
                     color: $text_medium;
                     font-weight: bold;
+
+                    .sortable-handle {
+                        border-color: $bg_panel;
+                    }
                 }
         
                 &:hover {
@@ -103,16 +128,20 @@
     }
 
     .group-editor {
-        background: #fff;
+        background: $bg;
         padding: 1.5rem 1.5rem;        
         border: solid 1px #e4e4e4;
         border-radius: .25rem;
     }
 
     .block-image {
-        background: #fff;
+        background: $bg;
         border: solid 1px $color_border;
         padding: .5rem;
         border-radius: .25rem;
+
+        .block-image-filename {
+            display: block;
+        }
     }
 }

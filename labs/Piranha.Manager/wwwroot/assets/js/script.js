@@ -1124,10 +1124,12 @@ piranha.blocks = new function() {
                 // Get the destination index, the moved item and the block list
                 var destination = e.detail.destination.index;
                 var item = $('#' + $(e.detail.item).attr('data-id'));
-                var list = $(e.detail.item).closest('.block-group').find('.block-group-item');
 
                 // Detach the moved item from the block list
                 $(item).detach();
+
+                // Get the current item list with the moved item detached
+                var list = $(e.detail.item).closest('.block-group').find('.block-group-item');
 
                 // Add it back to the destination position
                 if (destination > 0) {

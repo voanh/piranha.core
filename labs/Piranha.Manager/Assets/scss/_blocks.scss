@@ -121,7 +121,20 @@
 			margin-top: -40px;
 			opacity: 0;
             transition: opacity ease-in-out 0.2s;
-		}
+        }
+        
+        .block-image-filename {
+            background: $bg;
+            color: $text_light;
+            padding: .5rem 1rem;
+            position: absolute;
+            top: .5rem;
+            left: .5rem;
+            font-size: .75rem;
+            text-transform: uppercase;            
+            opacity: .7;
+            display: none;
+        }        
 
 		&:hover {
 			.block-image-picker {

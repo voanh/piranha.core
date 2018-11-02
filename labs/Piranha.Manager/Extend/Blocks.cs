@@ -1,4 +1,5 @@
 using Piranha.Extend;
+using Piranha.Extend.Blocks;
 using Piranha.Extend.Fields;
 
 namespace Piranha.Manager.ExtraBlocks
@@ -24,5 +25,13 @@ namespace Piranha.Manager.ExtraBlocks
     [BlockItemType(Type = typeof(SliderItemBlock))]
     public class SliderBlock : BlockGroup
     {
+    }
+
+    [BlockGroupType(Name = "Gallery", Category = "Groups", Icon = "fas fa-images")]
+    [BlockItemType(Type = typeof(ImageBlock))]
+    public class GalleryBlock : BlockGroup
+    {
+        public StringField Title { get; set; }
+        public HtmlField Description { get; set; }
     }
 }
