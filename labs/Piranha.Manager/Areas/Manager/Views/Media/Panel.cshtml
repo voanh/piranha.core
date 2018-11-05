@@ -1,0 +1,12 @@
+@model Piranha.Manager.Models.MediaListModel
+@inject Piranha.IApi Api
+@{
+    Layout = null;
+}
+
+<div class="media-gallery">
+    @foreach (var item in Model.Items)
+    {
+        <a href="#"><img src="@Url.Content(Api.Media.EnsureVersion(item.Id, 65, 65))" class="img-thumbnail" data-container=".panel-media" data-toggle="tooltip" data-placement="top" title="@item.Filename"></a>
+    }
+</div>

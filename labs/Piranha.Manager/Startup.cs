@@ -44,7 +44,8 @@ namespace Piranha.Manager
             services.AddPiranhaEF(options => options.UseSqlite("Filename=./piranha.labs.db"));
 
             // Should be packaged into a service extensions
-            services.AddScoped<Services.PageEditService, Services.PageEditService>();
+            services.AddScoped<Services.MediaListService>();
+            services.AddScoped<Services.PageEditService>();
             App.Modules.Register<Module>();
 
             App.Init();

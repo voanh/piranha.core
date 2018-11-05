@@ -3,7 +3,7 @@
 @foreach (var field in Model.GetFields())
 {
     <div class="form-group">
-        <label>@field</label>
-        @Html.Editor(field, new { IsBlock = true })
+        <label>@field.DisplayName</label>
+        @Html.Editor(field.PropertyName, new { IsBlock = true })
     </div>
 }

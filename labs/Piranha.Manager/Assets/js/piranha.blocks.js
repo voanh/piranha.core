@@ -1,3 +1,12 @@
+//
+// Copyright (c) 2018 Håkan Edling
+//
+// This software may be modified and distributed under the terms
+// of the MIT license.  See the LICENSE file for details.
+// 
+// http://github.com/piranhacms/piranha.core
+// 
+
 if (typeof(piranha)  == 'undefined')
     piranha = {};
 
@@ -6,6 +15,9 @@ piranha.blocks = new function() {
 
     var self = this;
 
+    /**
+     * Initializes the block component.
+     */
     self.init = function () {
         // Create block type list
         var types = sortable('.block-types', {
@@ -22,7 +34,10 @@ piranha.blocks = new function() {
         });
 
         // Create the block group lists
-        var groups = sortable('.block-group-list .list-group');
+        var groups = sortable('.block-group-list .list-group', {
+            items: ':not(.unsortable)',
+            acceptFrom: '.block-group-list .list-group,.block-types'
+        });
 
         for (var n = 0; n < groups.length; n++) {
             groups[n].addEventListener('sortupdate', function (e) {
@@ -100,6 +115,23 @@ piranha.blocks = new function() {
         });
     };
 
+    /**
+     * Removes the given block from the current page.
+     * 
+     * @param {*} elm The block to remove.
+     */
+    self.removeBlock = function (elm) {
+        // Remove the block
+        elm.remove();
+
+        // Recalc form indexes
+        self.recalcBlocks();
+    };
+
+    /**
+     * Recalculates all form elements after an item has been
+     * moved or inserted in the UI.
+     */
     self.recalcBlocks = function () {
         var items = $('.body-content .blocks > .block');
 
@@ -166,11 +198,7 @@ piranha.blocks = new function() {
 
     $(document).on('click', '.block-remove', function (e) {
         e.preventDefault();
-
-        $(this).closest('.block').remove();
-
-        // Recalc form indexes
-        self.recalcBlocks();
+        self.removeBlock($(this).closest('.block'));
     });
 
     $(document).on('focus', '.block .empty', function () {
@@ -185,7 +213,7 @@ piranha.blocks = new function() {
         }
     });
 
-    $(document).on('click', '.block-group-list a', function (e) {
+    $(document).on('click', '.block-group-list .list-group a', function (e) {
         e.preventDefault();
 
         // Activate/deactivate list items

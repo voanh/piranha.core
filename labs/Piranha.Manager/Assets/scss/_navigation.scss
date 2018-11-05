@@ -43,6 +43,7 @@
                 display: block;
                 padding: 0.5rem 1rem;
                 text-decoration: none;
+                transition: background-color .2s ease-in-out;
 
                 &:hover {
                     background: $bg_navbar_hover;

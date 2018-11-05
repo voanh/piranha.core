@@ -10,6 +10,7 @@ var input = {
         "Assets/js/html5sortable.js",
         "Assets/js/jquery.pjax.js",
         "Assets/js/piranha.blocks.js",
+        "Assets/js/piranha.media.js",
         "Assets/js/piranha.tools.js",
         "Assets/js/startup.js"
     ]

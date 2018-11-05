@@ -4,7 +4,7 @@ using Piranha.Extend.Fields;
 
 namespace Piranha.Manager.ExtraBlocks
 {
-    [BlockType(Name = "Slider Item", Category = "Content", Icon = "fas fa-cubes")]
+    [BlockType(Name = "Slider Item", Category = "Content", Icon = "fas fa-cubes", IsUnlisted = true)]
     public class SliderItemBlock : Block
     {
         public ImageField BackgroundImage { get; set; }
@@ -31,7 +31,14 @@ namespace Piranha.Manager.ExtraBlocks
     [BlockItemType(Type = typeof(ImageBlock))]
     public class GalleryBlock : BlockGroup
     {
+        /// <summary>
+        /// Main gallery title.
+        /// </summary>
         public StringField Title { get; set; }
+
+        /// <summary>
+        /// Optional description.
+        /// </summary>
         public HtmlField Description { get; set; }
     }
 }
