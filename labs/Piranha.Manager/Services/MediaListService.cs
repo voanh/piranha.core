@@ -36,7 +36,12 @@ namespace Piranha.Manager.Services
             return new MediaListModel()
             {
                 CurrentFolder = folderId,
-                Items = _api.Media.GetAll(folderId)
+                Items = _api.Media.GetAll(folderId).Select(m => new MediaListModel.MediaListItem
+                {
+                    Id = m.Id,
+                    Filename = m.Filename,
+                    PublicUrl = m.PublicUrl.Replace("~", "")
+                })
             };
         }
     }

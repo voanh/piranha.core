@@ -6,9 +6,22 @@
             var items = Piranha.App.Blocks.GetByCategory(category).Where(i => !i.IsUnlisted);
 
             <h3 class="block-category unsortable">@category</h3>
-            @foreach (var block in items) {
+            @foreach (var block in items) 
+            {
                 <div class="block-type" data-typename="@block.TypeName">
                     <a href="#" ><i class="@block.Icon"></i><span>@block.Name</span></a>
+                </div>
+            }
+        }
+        @foreach (var block in Piranha.App.Blocks.Where(b => b.IsGroup))
+        {
+            <h3 class="block-category unsortable">@block.Name</h3>
+            @foreach (var itemType in block.ItemTypes)
+            {
+                var blockType = Piranha.App.Blocks.GetByType(itemType);
+
+                <div class="block-type" data-typename="@blockType.TypeName">
+                    <a href="#" ><i class="@blockType.Icon"></i><span>@blockType.Name</span></a>
                 </div>
             }
         }

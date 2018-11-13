@@ -1,6 +1,6 @@
 @model Piranha.Extend.Block
 
-@foreach (var field in Model.GetFields())
+@foreach (var field in Piranha.App.Blocks.GetByType(Model.GetType()).Fields)
 {
     <div class="form-group">
         <label>@field.DisplayName</label>

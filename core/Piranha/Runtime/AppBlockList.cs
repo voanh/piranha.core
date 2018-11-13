@@ -12,6 +12,7 @@ using Piranha.Extend;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace Piranha.Runtime
 {
@@ -62,6 +63,7 @@ namespace Piranha.Runtime
                 item.Category = attr.Category;
                 item.Icon = attr.Icon;
                 item.IsUnlisted = attr.IsUnlisted;
+                item.IsGroup = typeof(BlockGroup).IsAssignableFrom(typeof(TValue));
 
                 if (attr is BlockGroupTypeAttribute)
                 {
@@ -80,6 +82,15 @@ namespace Piranha.Runtime
                 {
                     item.ItemTypes.Add(itemType);
                 }
+            }
+
+            foreach (var field in typeof(TValue).GetProperties().Where(p => typeof(IField).IsAssignableFrom(p.PropertyType)).Select(p => p.Name))
+            {
+                item.Fields.Add(new AppFieldReference
+                {
+                    DisplayName = Regex.Replace(field, "(\\B[A-Z])", " $1"),
+                    PropertyName = field
+                });
             }
             return item;
         }

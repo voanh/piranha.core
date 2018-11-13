@@ -20,14 +20,16 @@ namespace Piranha.Manager.Controllers
     public class PageController : Controller
     {
         private readonly Services.PageEditService _service;
+        private readonly Services.PageService _newService;
 
         /// <summary>
         /// Default controller.
         /// </summary>
         /// <param name="service">The main page edit service</param>
-        public PageController(Services.PageEditService service)
+        public PageController(Services.PageEditService service, Services.PageService newService)
         {
             _service = service;
+            _newService = newService;
         }
 
         /// <summary>
@@ -65,6 +67,21 @@ namespace Piranha.Manager.Controllers
             if (model != null)
                 return View(model);
             return NotFound();
+        }
+
+        /// <summary>
+        /// Edits the page with the given id.
+        /// </summary>
+        /// <param name="id">The page id</param>
+        [Route("page/new/{id:Guid}")]
+        public IActionResult EditNew(Guid id)
+        {
+            var model = _newService.GetById(id);
+
+            if (model != null)
+                return View(model);
+            return NotFound();
+
         }
 
         /// <summary>

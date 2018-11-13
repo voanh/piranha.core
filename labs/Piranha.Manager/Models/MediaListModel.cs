@@ -10,13 +10,19 @@
 
 using System;
 using System.Collections.Generic;
-using Piranha.Data;
 
 namespace Piranha.Manager.Models
 {
     public class MediaListModel
     {
+        public class MediaListItem
+        {
+            public Guid Id { get; set; }
+            public string Filename { get; set; }
+            public string PublicUrl { get; set; }
+        }
+
         public Guid? CurrentFolder { get; set; }
-        public IEnumerable<Media> Items { get; set; } = new List<Media>();
+        public IEnumerable<MediaListItem> Items { get; set; } = new List<MediaListItem>();
     }
 }

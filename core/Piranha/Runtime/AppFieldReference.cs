@@ -8,13 +8,12 @@
  * 
  */
 
-namespace Piranha.Manager.Models
+namespace Piranha.Runtime
 {
     /// <summary>
-    /// Information about a field that should be rendered in
-    /// the UI, for example default rendering of block groups.
+    /// Information about a field used in a content instance.
     /// </summary>
-    public class FieldInfo
+    public class AppFieldReference
     {
         /// <summary>
         /// Gets/sets the display name.

@@ -46,6 +46,8 @@ namespace Piranha.Manager
             // Should be packaged into a service extensions
             services.AddScoped<Services.MediaListService>();
             services.AddScoped<Services.PageEditService>();
+            services.AddScoped<Services.PageService>();
+            
             App.Modules.Register<Module>();
 
             App.Init();

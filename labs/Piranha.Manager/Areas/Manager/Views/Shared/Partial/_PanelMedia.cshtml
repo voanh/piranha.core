@@ -1,15 +1,13 @@
-<div class="panel panel-media">
+<div id="panel-media" class="panel panel-media">
     <a class="panel-close" href="#"><i class="fas fa-times"></i></a>
     <span class="panel-title">Media</span>
     <div class="panel-body">
         <div class="media-gallery">
-            <a href="#"><img src="/assets/img/thumb-img.jpg" class="img-thumbnail" data-container=".panel-media" data-toggle="tooltip" data-placement="top" title="8_Hyper-Light-Drifter.png"></a>
-            <a href="#"><img src="/assets/img/thumb-img.jpg" class="img-thumbnail" data-container=".panel-media" data-toggle="tooltip" data-placement="top" title="3045250-hyperlightdrifter+2016-03-30+21-08-13-73.jpg"></a>
-            <a href="#"><img src="/assets/img/thumb-img.jpg" class="img-thumbnail" data-container=".panel-media" data-toggle="tooltip" data-placement="top" title="HLD_Screenshot_BETA_entrance.png"></a>
-            <a href="#"><img src="/assets/img/thumb-img.jpg" class="img-thumbnail" data-container=".panel-media" data-toggle="tooltip" data-placement="top" title="HLD_Screenshot_BETA_eyes.png"></a>
-            <a href="#"><img src="/assets/img/thumb-img.jpg" class="img-thumbnail" data-container=".panel-media" data-toggle="tooltip" data-placement="top" title="HLD-camp-parallax.jpg"></a>
-            <a href="#"><img src="/assets/img/thumb-img.jpg" class="img-thumbnail" data-container=".panel-media" data-toggle="tooltip" data-placement="top" title="HLD-foreground.png"></a>
-            <a href="#"><img src="/assets/img/thumb-img.jpg" class="img-thumbnail" data-container=".panel-media" data-toggle="tooltip" data-placement="top" title="HLD-foreground.png"></a>
+            <media-item
+                v-for="item in items"
+                v-bind:media="item"
+                v-bind:key="item.id">
+            </media-item>
         </div>
     </div>
 </div>

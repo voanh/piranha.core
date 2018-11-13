@@ -1134,6 +1134,9 @@ piranha.blocks = new function() {
             acceptFrom: '.block-group-list .list-group,.block-types'
         });
 
+        //
+        // Add sortable events for block groups
+        //
         for (var n = 0; n < groups.length; n++) {
             groups[n].addEventListener('sortupdate', function (e) {
                 // Get the destination index, the moved item and the block list
@@ -1158,7 +1161,9 @@ piranha.blocks = new function() {
             });
         }
 
-        // Add sortable events
+        //
+        // Add sortable events for blocks
+        //
         blocks[0].addEventListener('sortupdate', function (e) {
             var item = e.detail.item;
 
@@ -1208,6 +1213,21 @@ piranha.blocks = new function() {
                 self.recalcBlocks();
             }
         });
+    };
+
+    /**
+     * Selects an item in a block group list.
+     * 
+     * @param {*} elm The block to select.
+     */
+    self.selectGroupItem = function (elm) {
+        // Activate/deactivate list items
+        elm.parent().find('.list-group-item').removeClass('active')
+        elm.addClass('active');
+
+        // Hide/show item details
+        elm.closest('.block-group').find('.block-group-item:not(.d-none)').addClass('d-none');
+        $('#' + elm.attr('data-id')).removeClass('d-none');
     };
 
     /**
@@ -1310,14 +1330,7 @@ piranha.blocks = new function() {
 
     $(document).on('click', '.block-group-list .list-group a', function (e) {
         e.preventDefault();
-
-        // Activate/deactivate list items
-        $(this).parent().find('.list-group-item').removeClass('active')
-        $(this).addClass('active');
-
-        // Hide/show item details
-        $(this).closest('.block-group').find('.block-group-item:not(.d-none)').addClass('d-none');
-        $('#' + $(this).attr('data-id')).removeClass('d-none');
+        self.selectGroupItem($(this));
     });
 };
 //

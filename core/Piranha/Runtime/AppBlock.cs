@@ -37,6 +37,11 @@ namespace Piranha.Runtime
         public bool IsUnlisted { get; set; }
 
         /// <summary>
+        /// Gets/sets if the block type is a group.
+        /// </summary>
+        public bool IsGroup { get; set; }
+
+        /// <summary>
         /// Gets/sets if the block group should use a 
         /// custom view.
         /// </summary>
@@ -45,14 +50,11 @@ namespace Piranha.Runtime
         /// <summary>
         /// Gets/sets the specified item types.
         /// </summary>
-        public IList<Type> ItemTypes { get; set; }
+        public IList<Type> ItemTypes { get; set; } = new List<Type>();
 
         /// <summary>
-        /// Default constructor.
+        /// Gets/sets the block fields.
         /// </summary>
-        public AppBlock() : base()
-        {
-            ItemTypes = new List<Type>();
-        }
-    }
+        public IList<AppFieldReference> Fields { get; set; } = new List<AppFieldReference>();
+     }
 }
