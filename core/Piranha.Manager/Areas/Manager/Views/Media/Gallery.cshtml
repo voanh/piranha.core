@@ -1,0 +1,178 @@
+@model Piranha.Areas.Manager.Models.MediaListModel
+@using Piranha.Models
+@{
+    ViewBag.Title = "Media";
+    ViewBag.Subtitle = "";
+    ViewBag.Controller = "Media";
+
+    foreach (var item in Model.Breadcrumb) {
+        ViewBag.Subtitle += $"<small>/ <a href=\"{Url.Action("List", new { folderId = item.Id })}\">{@item.Name}</a></small>";
+    }
+}
+
+@section script {
+    <script>
+        Dropzone.autoDiscover = false;
+        $(document).ready(function () {
+            $("#dropzone").dropzone({
+                paramName: 'Uploads',
+                url: '@Url.Action("Add")',
+                uploadMultiple: true,
+                init: function () {
+                    this.on("queuecomplete", function(file) {
+                        location.reload();
+                    });
+                }
+            });
+        });
+
+        function allowDrop (e) {
+            e.preventDefault();
+
+            var target = $(e.target);
+
+            var targetId = target.attr('data-id');
+            if (!targetId)
+                target = target.closest('tr');
+
+            if (!target.hasClass('dropping'))
+                target.addClass('dropping');
+        }
+
+        function dropLeave (e) {
+            e.preventDefault();
+
+            var target = $(e.target);
+
+            var targetId = target.attr('data-id');
+            if (!targetId)
+                target = target.closest('tr');
+            target.removeClass('dropping');
+        }        
+
+        function drag (e) {
+            e.dataTransfer.setData("text", $(e.target).attr('data-id'));
+        }
+
+        function drop (e) {
+            e.preventDefault();
+            var data = e.dataTransfer.getData("text");
+            var targetId = $(e.target).attr('data-id');
+            if (!targetId)
+                targetId = $(e.target).closest('tr').attr('data-id');
+        
+            $('#mediaId').val(e.dataTransfer.getData("text"));
+            $('#targetId').val(targetId);
+            $('#move-form').submit();
+        }        
+    </script>    
+}
+
+@using (var form = Html.BeginForm("Move", "Media", FormMethod.Post, new { id="move-form", @class = "form", role = "form" })) {
+    <input type="hidden" id="mediaId" name="mediaId" value="">
+    <input type="hidden" id="folderId" name="folderId" value="@Model.CurrentFolderId">
+    <input type="hidden" id="targetId" name="targetId" value="">
+}
+
+<div class="row">
+    <div class="col-sm-12 buttons">
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-labeled btn-primary" data-toggle="dropdown">
+                <span class="btn-label">
+                    <i class="fas fa-plus"></i>
+                </span>Add
+            </button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li><a href="#" data-toggle="modal" data-target="#modalAddFolder">New folder</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#modalAddMedia">New upload</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(ViewBag.Message)) {
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="@ViewBag.MessageCss">
+                @Html.Raw(ViewBag.Message)
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form action="@Url.Action("Add")" class="dropzone needsclick dz-clickable" id="dropzone" enctype="multipart/form-data">
+            @Html.Hidden("ParentId", Model.CurrentFolderId)
+
+            <div class="dz-message needsclick">
+                <span class="fas fa-cloud-upload-alt"></span>
+                Drop files here or click to upload.
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-filter" data-table="#media-table">
+            <div class="form-group">
+                <input id="media-search" type="text" class="form-control input-block inline-search inline-search-light" placeholder="Search for a media file in the current folder">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row gallery">
+            @if (Model.CurrentFolderId.HasValue)
+            {
+                <div class="col-md-3">
+                    <a href="@Url.Action("List", new { layout ="gallery", folderId = Model.ParentFolderId })" class="thumbnail" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="dropLeave(event)" data-id="@Model.ParentFolderId">
+                        <span class="fas fa-folder-open media-icon"></span>
+                        <div class="caption">
+                            <p>...</p>
+                        </div>
+                    </a>
+                </div>
+            }
+
+            @foreach (var folder in Model.Folders)
+            {
+                <div class="col-md-3">
+                    <a href="@Url.Action("List", new { layout ="gallery", folderId = folder.Id })" class="thumbnail" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="dropLeave(event)" data-id="@folder.Id">
+                        <span class="fas fa-folder-open media-icon"></span>
+                        <div class="caption">
+                            <p>@folder.Name</p>
+                        </div>
+                    </a>
+                </div>
+            }
+
+            @foreach (var item in Model.Media)
+            {
+                <div class="col-md-3">
+                    <a href="#" class="thumbnail" draggable="true" ondragstart="drag(event)"  data-toggle="modal" data-target="#modalImgPreview" data-filename="@item.Filename" data-url="@Url.Content(item.PublicUrl)" data-contenttype="@item.ContentType" data-filesize="@Piranha.Utils.FormatByteSize(item.Size)" data-modified="@item.LastModified.ToString("yyyy-MM-dd")" data-id="@item.Id" data-parentid="@item.FolderId">
+                        @if (item.Type == MediaType.Image) {
+                            <img src="@Url.Content(item.PublicUrl)">
+                        } else if (item.Type == MediaType.Video) {
+                            <span class="fas fa-film media-icon"></span>
+                        } else if (item.Type == MediaType.Document) {
+                            <span class="fas fa-book media-icon"></span>
+                        } else {
+                            <span class="fas fa-exclamation-triangle media-icon"></span>                                
+                        }                        
+                        <div class="caption text-center">
+                            <p>@item.Filename</p>
+                        </div>
+                    </a>
+                </div>            
+            }
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Partial/_MediaModal.cshtml", Model)
+@Html.Partial("Partial/_FolderModal.cshtml", Model)

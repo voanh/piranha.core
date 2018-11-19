@@ -33,9 +33,20 @@ namespace Piranha.Areas.Manager.Controllers
         /// </summary>
         /// <param name="folderId">The optional folder id</param>
         [Route("manager/media/{folderId:Guid?}")]
+        [Route("manager/media/{layout}/{folderId:Guid?}")]
         [Authorize(Policy = Permission.Media)]
-        public IActionResult List(Guid? folderId = null) {
-            return View("List", Models.MediaListModel.Get(api, folderId));
+        public IActionResult List(string layout = "list", Guid? folderId = null) {
+
+            var model = Models.MediaListModel.Get(api, folderId);
+            switch (layout.ToLower())
+            {
+                default:
+                case "list":
+                    return View("List", model);
+
+                case "gallery":
+                    return View("Gallery", model);
+            }
         }
 
         /// <summary>
