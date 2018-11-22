@@ -1,0 +1,21 @@
+@import "colors";
+
+a {
+    color: $color_link;
+
+    &:hover {
+        color: $color_link_hover;
+    }
+}
+
+.text-help {
+    color: $text_lighter;
+    font-size: .8rem;
+    padding: .5rem 1rem;
+    border-left: solid 4px lighten($color_link, 50%);
+}
+
+.tooltip-inner {
+    font-size: .6rem;
+    text-transform: uppercase;
+}

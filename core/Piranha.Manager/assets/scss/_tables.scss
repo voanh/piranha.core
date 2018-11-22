@@ -1,0 +1,94 @@
+@import "colors";
+
+.table {
+    thead {
+        th {
+            background: $color_border;
+            font-family: "Open Sans",Arial;
+            font-weight: 700;
+            text-transform: uppercase;
+        }            
+    }
+    tbody {
+        tr {
+            background: #fff;
+            border-top: solid 4px $bg_main;
+
+            &.dropping {
+                background: $color_drop;
+            }
+
+            td:first-child {
+                a {
+                    display: block;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+            }
+        }
+
+        .text-limit-cell {
+            position: relative;
+        }
+    }
+
+    .actions {
+        text-align: right;
+        padding-right: 1.5rem;
+
+        &.one {
+            width: 65px;
+        }
+
+        &.two {
+            width: 95px;
+        }
+
+        &.three {
+            width: 115px;
+        }
+    }
+
+    .date {
+        width: 110px;
+    }
+
+    .medium {
+        width: 160px;
+    }
+
+    &.table-main
+    {
+        tbody {
+            tr {
+                td:first-child {
+                    a {
+                        font-family: "Open Sans",Arial;
+                        font-size: 1rem;                 
+                    }        
+                }
+            }
+        }
+    }
+
+    &.table-media {
+        .dd-handle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 48px;
+            padding: .8rem;
+            border-right: solid 2px $bg_main;
+        }
+
+        .text-limit-cell {
+            padding-left: 50px;
+        }
+        
+        .media-icon {
+            color: $text_lighter;
+            margin-right: .5rem;
+        }
+    }
+}

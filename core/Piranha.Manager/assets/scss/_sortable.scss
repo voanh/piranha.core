@@ -1,0 +1,8 @@
+@import "colors";
+
+.sortable-placeholder {
+    padding: 0;
+    background: $bg_sortable; 
+    border: 1px dashed $color_sortable_border; 
+    box-sizing: border-box;
+}

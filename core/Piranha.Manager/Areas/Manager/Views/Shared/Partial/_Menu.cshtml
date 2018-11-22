@@ -4,28 +4,30 @@
 @{
     var controller = ViewBag.Controller?.ToLower();
 }
-<ul class="nav navmenu-nav">
-    @foreach (var group in Piranha.Manager.Menu.Items) {
-        if (group.Items.Count > 0) {
+
+<ul class="navbar-nav">
+    @foreach (var group in Piranha.Manager.Menu.Items) 
+    {
+        if (group.Items.Count > 0)
+        {
             <li>
-                <a href="#"><i class="@group.Css"></i><span class="title">@group.Name</span></a>
-                <ul>
-                    @foreach (var item in group.Items) {
-                        if (string.IsNullOrWhiteSpace(item.Policy) || (await AuthorizationService.AuthorizeAsync(User, item.Policy)).Succeeded) {
-                            <li @(item.Controller.ToLower() == controller ? "class=active" : "")>
-                                <a href="@Url.Action(item.Action, item.Controller, item.Params)">
-                                    @if (!string.IsNullOrEmpty(item.Css)) {
-                                        <i class="@item.Css"></i>
-                                    }
-                                    <span class="title">@item.Name</span>
-                                </a>
-                            </li>
-                        }
+                <span class="header"><i class="@group.Css"></i>@group.Name</span>
+                @foreach (var item in group.Items) 
+                {
+                    if (string.IsNullOrWhiteSpace(item.Policy) || (await AuthorizationService.AuthorizeAsync(User, item.Policy)).Succeeded) 
+                    {
+                        <li @(item.Controller.ToLower() == controller ? "class=active" : "")>
+                            <a href="@Url.Action(item.Action, item.Controller, item.Params)">
+                                @if (!string.IsNullOrEmpty(item.Css)) {
+                                    <i class="@item.Css"></i>
+                                }
+                                @item.Name
+                            </a>
+                        </li>
                     }
-                </ul>
-            </li> }
+                }
+            </li>
+        }
     }
-    <li>
-        <a href="@Url.Action("Logout", "Account")"><i class="fas fa-power-off"></i><span class="title">Logout</span></a>
-    </li>
+    <li><a class="header" href="@Url.Action("Logout", "Account")"><i class="fas fa-power-off"></i>Logout</a></li>
 </ul>

@@ -8,6 +8,7 @@
  * 
  */
 
+using System.IO;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Builder;
@@ -213,9 +214,15 @@ public static class ManagerModuleExtensions
     /// <param name="builder">The current application builder</param>
     /// <returns>The builder</returns>
     public static IApplicationBuilder UsePiranhaManager(this IApplicationBuilder builder) {
+        builder.UseStaticFiles(new StaticFileOptions
+        {
+            FileProvider = new EmbeddedFileProvider(typeof(ManagerModuleExtensions).Assembly, "Piranha.assets.output"),
+            RequestPath = "/manager/assets"
+        });
+
         return builder
             .UseSession()
-            .UseMiddleware<Piranha.Manager.ResourceMiddleware>()
+            //.UseMiddleware<Piranha.Manager.ResourceMiddleware>()
             .UseSignalR(routes => 
             {
                 routes.MapHub<PreviewHub>("/manager/preview");

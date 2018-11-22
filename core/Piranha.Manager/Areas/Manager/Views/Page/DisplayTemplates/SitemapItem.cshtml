@@ -17,7 +17,7 @@
         }
     </div>
     @if (!Model.ReadOnly) {
-        <div class="actions three pull-right">
+        <div class="actions three float-right">
             @if ((await Authorization.AuthorizeAsync(User, Piranha.Manager.Permission.PagesAdd)).Succeeded) {
                 <a class="add-after first pull-left" data-type="" href="@Url.Action("AddAt", new { type = "pageType", parentId = item.ParentId, sortOrder = item.SortOrder + 1, siteId = siteId })" data-toggle="tooltip" data-original-title="Add after" data-placement="top">
                     <span class="fas fa-angle-down"></span>
@@ -33,10 +33,10 @@
             }
         </div>
     }
-    <div class="date pull-right">
+    <div class="date float-right">
         @(item.Published.HasValue ? item.Published.Value.ToString("yyyy-MM-dd") : "")
     </div>
-    <div class="info pull-right">
+    <div class="info float-right">
         @item.PageTypeName
     </div>
     <div class="content">

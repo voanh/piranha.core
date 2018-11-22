@@ -1,73 +1,61 @@
-﻿@{
+@{
     var module = Piranha.App.Modules.Get<Piranha.Manager.Module>();
 }
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>@ViewBag.Title</title>
 
-    <link href="//fonts.googleapis.com/css?family=Gentium+Book+Basic:700" rel="stylesheet"> 
-    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
-    <link href="~/manager/assets/css/style.min.css" rel="stylesheet" type="text/css" />
-    @foreach (var style in module.Styles) {
-    <link href="@Url.Content(style)" rel="stylesheet" type="text/css" />        
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+    <link rel="stylesheet" href="~/manager/assets/css/style.min.css">
+    @foreach (var style in module.Styles) 
+    {
+        <link href="@Url.Content(style)" rel="stylesheet" type="text/css" />        
     }
-    <link type="image/x-icon" rel="icon" href="~/manager/assets/img/icon.ico">
-    <link type="image/x-icon" rel="shortcut icon" href="~/manager/assets/img/icon.ico">
-
     @RenderSection("head", required: false)
 </head>
+
 <body>
-    <nav class="navmenu navmenu-inverse navmenu-fixed-left" role="navigation">
-        <a class="navmenu-brand" href="#">
-            <div class="logo-main"></div>
-            <div class="logo-small"></div>
-        </a>
-        @Html.Partial("Partial/_Menu")
-    </nav>
-
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12">
-                <h1>@ViewBag.Title
-                    @if (!String.IsNullOrWhiteSpace(ViewBag.Subtitle)) {
-                        @Html.Raw(ViewBag.Subtitle)
-                    }
-                </h1>
-            </div>
+    <main class="container-fluid">
+        <div class="main-nav">
+            <nav>
+                <partial name="Partial/_Menu" />
+            </nav>
         </div>
-        @RenderBody()
-    </div>
+        <div class="body">
+            @RenderBody()
+        </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        if (typeof(piranha)  == 'undefined')
+            piranha = {};
 
-    @Html.Partial("Partial/_MediaModal.cshtml")
-    @Html.Partial("Partial/_PreviewModal.cshtml")
-    @Html.Partial("Partial/_PageModal.cshtml")
-    @Html.Partial("Partial/_PostModal.cshtml")
-    @Html.Partial("Partial/_BlockModal.cshtml")
+        piranha.baseUrl = '@Url.Content("~/")';
+    </script>
+    <script src="~/manager/assets/js/script.min.js"></script>
+    <script src="~/manager/assets/js/piranha.media.js"></script>
+    <script src="~/manager/assets/tinymce/tinymce.min.js"></script>
+
+    <partial name="Partial/_MediaModal" />
+    <partial name="Partial/_PreviewModal" />
+    <partial name="Partial/_PageModal" />
+    <partial name="Partial/_PostModal" />
+    <partial name="Partial/_BlockModal" />
     @foreach (var partial in module.Partials) 
     {
-        @Html.Partial(partial)
+        <partial name="@partial" />
     }
+    <partial name="Partial/_EditorSetup" />
 
-    <div id="notifications-container" class="notifications-container"></div>
-
-    <div class="notification">
-        <div class="icon"><span class="fas fa-check-circle"></span></div>
-    </div>
-
-    <script type="text/javascript">
-        var baseUrl = '@Url.Content("~/")';
-    </script>
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
-    <script type="text/javascript" src="~/manager/assets/js/script.min.js"></script>
-    <script type="text/javascript" src="~/manager/assets/tinymce/tinymce.min.js"></script>
-    @foreach (var script in module.Scripts) {
-    <script type="text/javascript" src="@Url.Content(script)"></script>
-    }
-    @Html.Partial("Partial/_EditorSetup")
     @RenderSection("script", required: false)
 </body>
 </html>

@@ -1,0 +1,180 @@
+@import "colors";
+
+ol.sitemap {
+    padding-left: 0;
+
+	.actions {
+		text-align: right;
+
+		&.one {
+			width: 65px;
+		}
+
+		&.two {
+			width: 95px;
+		}
+
+		&.three {
+			width: 115px;
+		}
+	}
+
+    &.header {
+		li {
+			list-style-type: none;
+		}
+
+        background: $color_border;
+        font-family: "Open Sans", Arial;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin: 0;
+
+        div {
+            padding: 12px 20px;
+        }
+
+		.date {
+			width: 120px;
+			padding: 12px 20px;			
+		}
+
+		.info {
+			width: 140px;
+			padding: 12px 20px;			
+		}
+    }
+}
+
+li.sitemap-item {
+	list-style-type: none;
+
+	a {
+		padding: 10px 8px;
+
+		&:last-child, &.last {
+			padding-right: 20px;
+		}
+		&:first-child, &.first {
+			padding-left: 20px;
+		}
+	}
+
+	ol {
+		padding-left: 0;
+	}
+
+	.dd-toggle {
+		background: #fff;
+		color: $color_link;
+		box-sizing: border-box;
+		float: left;
+		height: 43px;
+		width: 32px;
+		padding: 14px 10px;
+
+		span {
+			cursor: pointer;
+
+		}
+
+		.fa-minus-circle {
+			display: none;
+		}			
+	}
+
+	&.expanded {
+		>.dd-toggle {
+			.fa-plus-circle {
+				display: none;
+			}
+			.fa-minus-circle {
+				display: inline;
+			}
+		}
+
+		>.dd-list {
+			display: block;
+		}
+	}
+
+	.content {
+		background: #fff;
+		height: 43px;
+		padding: 10px 20px 10px 0;
+		margin: 2px 0 0 66px; 
+		box-sizing: border-box;
+
+		a, .title {
+			font-family: "Open Sans", Arial;
+			font-size: 16px;
+			padding: 0 !important;
+		}
+
+		.label:first-of-type {
+			margin-left: 10px;
+		}			
+	}
+
+	&.hover-remove {
+		opacity: 0.8;
+	}	
+
+	li {
+		.content a { padding-left: 35px; }
+		li {
+			.content a { padding-left: 50px; }
+			li {
+				.content a { padding-left: 65px; }
+				li {
+					.content a { padding-left: 80px; }
+					li {
+						.content a { padding-left: 95px; }
+					}
+				}
+			}
+		}
+	}
+
+	&.unpublished {
+		>.content {
+			a {
+				opacity: 0.6;
+			}
+		}
+		.date {
+			opacity: 0.6;
+		}
+	}
+
+    .date {
+        width: 120px;
+        padding: 12px 20px;
+    }
+
+    .info {
+        width: 140px;
+		padding: 12px 20px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+    }
+
+    .actions {
+        a {
+            display: inline-block;
+            font-size: 14px;
+			margin-top: 2px;
+			
+			&.add-after, &.add-below {
+				font-size: 16px;
+				line-height: 14px;
+				padding-top: 12px;
+			}
+        }
+
+        &.one {
+            width: 60px;
+        }
+    }
+}

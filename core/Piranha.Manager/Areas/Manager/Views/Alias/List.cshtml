@@ -4,36 +4,43 @@
     ViewBag.Controller = "Alias";
 }
 
-<div class="row">
-    <div class="col-sm-12 buttons">
-        @if ((await Authorization.AuthorizeAsync(User, Piranha.Manager.Permission.AliasesEdit)).Succeeded) {        
-            <a href="#" class="btn btn-labeled btn-primary pull-right" data-toggle="modal" data-target="#modalAddAlias">
-                <span class="btn-label">
-                    <i class="fas fa-plus"></i>
-                </span>Add alias
-            </a>
-        }
-
-        @if (Model.Sites.Count() > 1) {
-            <div id="btn-sitepicker" class="btn-group pull-right" style="margin-right: 15px">
-                <button type="button" class="btn btn-labeled btn-default" data-toggle="dropdown">
-                    <span class="btn-label">
-                        <i class="fas fa-globe"></i>
-                    </span>@Model.SiteTitle
-                </button>
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                    @foreach (var site in Model.Sites) {
-                        <li><a href="@Url.Action("List", new { siteId = site.Id })">@site.Title</a></li>
-                    }
-                </ul>
-            </div>
-        }
-    </div>
+<div class="top-nav">
+    <nav>
+        <ul class="navbar-nav">
+            @if (Model.Sites.Count() > 1) 
+            {
+                <li>
+                    <div class="btn-group" role="group">
+                        <button id="btnSites" class="btn btn-sm btn-labeled btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-globe"></i>@Model.SiteTitle
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnSites">
+                            @foreach (var site in Model.Sites) 
+                            {
+                                <a class="dropdown-item btn-panel-region" href="@Url.Action("List", new { siteId = site.Id })">@site.Title</a>
+                            }
+                        </div>
+                    </div>
+                </li>
+            }
+            @if ((await Authorization.AuthorizeAsync(User, Piranha.Manager.Permission.AliasesEdit)).Succeeded)
+            {
+                <li>
+                    <a href="#" class="btn btn-sm btn-labeled btn-primary" data-toggle="modal" data-target="#modalAddAlias">
+                        <i class="fas fa-plus"></i>Add
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>            
 </div>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href="#">Settings</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Aliases</li>
+    </ol>
+</nav>
 
 @if (!string.IsNullOrWhiteSpace(ViewBag.Message)) {
     <div class="row">
@@ -45,7 +52,7 @@
     </div>
 }
 
-<table class="table table-striped table-main">
+<table class="table table-main">
     <thead>
         <tr>
             <th>Alias URL</th>

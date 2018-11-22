@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Håkan Edling
+ * Copyright (c) 2016-2018 Håkan Edling
  *
  * This software may be modified and distributed under the terms
  * of the MIT license.  See the LICENSE file for details.
@@ -8,83 +8,66 @@
  * 
  */
 
-var gulp = require("gulp"),
-    less = require("gulp-less"),
+var gulp = require('gulp'),
+    sass = require('gulp-sass'),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
     rename = require("gulp-rename"),
     uglify = require("gulp-uglify");
 
-var paths = {
+var input = {
     js: [
-        "assets/js/polyfill.js",
-        "assets/lib/jquery/dist/jquery.js",
-        "assets/lib/bootstrap/dist/js/bootstrap.js",
-        "assets/lib/jasny-bootstrap/dist/js/jasny-bootstrap.js",
-        "assets/lib/moment/min/moment.min.js",
-        "assets/lib/bootstrap-datetimepicker-3/build/js/bootstrap-datetimepicker.min.js",
-        "assets/lib/jquery-nestable/jquery.nestable.js",
-        "assets/lib/jquery.ns-autogrow/dist/jquery.ns-autogrow.js",
-        "assets/lib/select2/dist/js/select2.js",
-        "assets/lib/dropzone/dist/dropzone.js",
-        "assets/lib/simplemde/dist/simplemde.min.js",
-        "assets/lib/object.assign-polyfill/object.assign.js",
-        "assets/js/html5sortable.js",
-        "assets/js/piranha.notifications.js",
-        "assets/js/piranha.media.js",
-        "assets/js/piranha.page.js",
-        "assets/js/piranha.post.js",
-        "assets/js/ui.js"
+        "Assets/js/polyfill.js",
+        "Assets/lib/jquery/dist/jquery.js",
+        "Assets/lib/bootstrap/dist/js/bootstrap.js",
+        "Assets/lib/jasny-bootstrap/dist/js/jasny-bootstrap.js",
+        "Assets/lib/moment/min/moment.min.js",
+        "Assets/lib/bootstrap-datetimepicker-3/build/js/bootstrap-datetimepicker.min.js",
+        "Assets/lib/jquery-nestable/jquery.nestable.js",
+        "Assets/lib/jquery.ns-autogrow/dist/jquery.ns-autogrow.js",
+        "Assets/lib/select2/dist/js/select2.js",
+        "Assets/lib/dropzone/dist/dropzone.js",
+        "Assets/lib/simplemde/dist/simplemde.min.js",
+        "Assets/lib/object.assign-polyfill/object.assign.js",
+        "Assets/js/html5sortable.js",
+        "Assets/js/piranha.notifications.js",
+        "Assets/js/piranha.media.js",
+        "Assets/js/piranha.page.js",
+        "Assets/js/piranha.post.js",
+        "Assets/js/ui.js"
     ],
-    jsDest: "assets/js/script.js",
-    signalJs: [
+    signaljs: [
         "node_modules/@aspnet/signalr/dist/browser/signalr.min.js"
-    ],
-    signalDest: "assets/js/script.signalr.js",
-    editorLess: "assets/less/editor.less",
-    less: "assets/less/style.less",
-    css: ["assets/css/*.css", "!assets/css/*.min.css"],
-    cssDest: "assets/css"
+    ],    
+};
+var output = {
+    js: "Assets/output/js/script.js",
+    signaljs: "Assets/output/js/script.signalr.js"
 };
 
-//
-// Compile & minimize less files
-//
-gulp.task("min:css", function () {
-  return gulp.src(paths.less)
-    .pipe(less({
-        relativeUrls: true
-    }))
-    .pipe(gulp.dest(paths.cssDest))
-    .pipe(cssmin())
-    .pipe(rename({
-        suffix: ".min"
-    }))
-    .pipe(gulp.dest(paths.cssDest));
-});
-
-//
-// Compile & minimize editor less file
-//
-gulp.task("min:editor", function () {
-    return gulp.src(paths.editorLess)
-        .pipe(less({
-            relativeUrls: true
-        }))
-        .pipe(gulp.dest(paths.cssDest))
+gulp.task('min:css', function () {
+    return gulp.src('Assets/scss/style.scss')
+        .pipe(sass().on('error', sass.logError))
         .pipe(cssmin())
         .pipe(rename({
             suffix: ".min"
         }))
-        .pipe(gulp.dest(paths.cssDest));
-});
+        .pipe(gulp.dest('Assets/output/css'));
+    });
 
-//
-// Combine & minimze js files
-//
+gulp.task('min:editor', function () {
+    return gulp.src('Assets/scss/editor.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(cssmin())
+        .pipe(rename({
+            suffix: ".min"
+        }))
+        .pipe(gulp.dest('Assets/output/css'));
+    });
+
 gulp.task("min:js", function () {
-    return gulp.src(paths.js, { base: "." })
-        .pipe(concat(paths.jsDest))
+    return gulp.src(input.js, { base: "." })
+        .pipe(concat(output.js))
         .pipe(gulp.dest("."))
         .pipe(uglify())
         .pipe(rename({
@@ -93,12 +76,9 @@ gulp.task("min:js", function () {
         .pipe(gulp.dest("."));
 });
 
-//
-// Combine & minimze js files
-//
 gulp.task("min:signalr", function () {
-    return gulp.src(paths.signalJs, { base: "." })
-        .pipe(concat(paths.signalDest))
+    return gulp.src(input.signaljs, { base: "." })
+        .pipe(concat(output.signaljs))
         .pipe(gulp.dest("."))
         .pipe(uglify())
         .pipe(rename({

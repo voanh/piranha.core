@@ -1,0 +1,18 @@
+@import "colors";
+
+.card {
+    border-color: $color_border;
+    margin-bottom: 1rem;
+
+    .card-header {
+        background: $bg_panel;
+        border-color: $color_border;
+
+        .title {
+            font-family: "Open Sans",Arial;
+            font-size: 1rem;
+            text-transform: uppercase;
+            padding: .5rem 0;
+        }
+    }
+}

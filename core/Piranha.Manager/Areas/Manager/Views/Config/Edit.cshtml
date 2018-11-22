@@ -7,16 +7,27 @@
 @using (var form = Html.BeginForm("Save", "Config", FormMethod.Post, new { @id = "main-form", @class = "form", @role = "form" })) {
     @Html.AntiForgeryToken()
 
-    <div class="row">
-        <div class="col-sm-12 buttons">
-            <button type="submit" class="btn btn-labeled btn-success">
-                <span class="btn-label">
-                    <i class="fas fa-check"></i>
-                </span>
-                Save
-            </button>
-        </div>
+    <div class="top-nav">
+        <nav>
+            <ul class="navbar-nav">
+                @if ((await Authorization.AuthorizeAsync(User, Piranha.Manager.Permission.ConfigEdit)).Succeeded)
+                {
+                    <li>
+                        <button type="submit" class="btn btn-sm btn-labeled btn-success">
+                            <i class="fas fa-check"></i>Add
+                        </button>
+                    </li>
+                }
+            </ul>
+        </nav>            
     </div>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page"><a href="#">System</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Config</li>
+        </ol>
+    </nav>
 
     @if (!string.IsNullOrWhiteSpace(ViewBag.Message)) {
         <div class="row">
@@ -28,11 +39,11 @@
         </div>
     }
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">General</h3>
+    <div class="card">
+        <div class="card-header">
+            <span class="title">General</span>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
@@ -71,15 +82,15 @@
                         @Html.TextBoxFor(m => m.General.ArchivePageSize, new { @class = "form-control small", type = "number" })
                     </div>
                 </div>
-            </div>
+            </div>            
         </div>
     </div>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Caching</h3>
+    <div class="card">
+        <div class="card-header">
+            <span class="title">Caching</span>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
