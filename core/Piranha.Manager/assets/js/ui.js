@@ -61,13 +61,13 @@ function RegisterMarkdown (e) {
 };
 
 $(document).ready(function () {
-    $('.datepicker').datetimepicker({
-        format: "YYYY-MM-DD"
-    });
+    //$('.datepicker').datetimepicker({
+    //    format: "YYYY-MM-DD"
+    //});
 
-    $('.datetimepicker').datetimepicker({
-        format: "YYYY-MM-DD HH:mm"
-    });
+    //$('.datetimepicker').datetimepicker({
+    //    format: "YYYY-MM-DD HH:mm"
+    //});
 
     $('.select2').select2({
         tags: true

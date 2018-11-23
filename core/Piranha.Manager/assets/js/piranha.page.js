@@ -105,7 +105,7 @@ $(document).on('click', '.btn-page-clear', function () {
     piranha.page.remove($(this));
 });
 
-$('#modalPage').on('show.bs.modal', function (event) {
+$(document).on('show.bs.modal','#modalPage', function (event) {
     piranha.page.init($(event.relatedTarget));
     piranha.page.load($(event.relatedTarget));
 });

@@ -146,11 +146,11 @@ $(document).on('click', '.btn-media-clear', function () {
     piranha.media.remove($(this));
 });
 
-$('.modal').on('shown.bs.modal', function (event) {
+$(document).on('shown.bs.modal','.modal', function (event) {
     $(this).find('input[autofocus]').focus();
 });
 
-$('#modalMedia').on('show.bs.modal', function (event) {
+$(document).on('show.bs.modal','#modalMedia', function (event) {
     piranha.media.init($(event.relatedTarget));
     if (piranha.media.initCallback) {
         piranha.media.initCallback();
@@ -159,7 +159,7 @@ $('#modalMedia').on('show.bs.modal', function (event) {
     piranha.media.load($(event.relatedTarget), '');
 });
 
-$('#modalImgPreview').on('show.bs.modal', function (event) {
+$(document).on('show.bs.modal','#modalImgPreview', function (event) {
     var link = $(event.relatedTarget);
     var filename = link.data('filename');
     var url = link.data('url');

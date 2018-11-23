@@ -99,7 +99,7 @@ $(document).on('click', '.btn-post-clear', function () {
     piranha.post.remove($(this));
 });
 
-$('#modalPost').on('show.bs.modal', function (event) {
+$(document).on('show.bs.modal','#modalPost', function (event) {
     piranha.post.init($(event.relatedTarget));
     piranha.post.load($(event.relatedTarget));
 });
