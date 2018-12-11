@@ -31,14 +31,14 @@ namespace Piranha.Extend
         string Version { get; }
 
         /// <summary>
-        /// Get the module release date
-        /// </summary>
-        string ReleaseDate { get; }
-
-        /// <summary>
         /// Get the module description
         /// </summary>
         string Description { get; }
+
+        /// <summary>
+        /// Gets/sets the icon URL.
+        /// </summary>
+        string IconUrl { get; }        
 
         /// <summary>
         /// Get the package url for this module

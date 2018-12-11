@@ -14,7 +14,7 @@
                 {
                     <li>
                         <button type="submit" class="btn btn-sm btn-labeled btn-success">
-                            <i class="fas fa-check"></i>Add
+                            <i class="fas fa-check"></i>Save
                         </button>
                     </li>
                 }
@@ -67,7 +67,7 @@
                             The default number of levels that should be expanded in the page 
                             sitemap. This is useful for smaller sitemaps.
                         </blockquote>
-                        @Html.TextBoxFor(m => m.General.ExpandedSitemapLevels, new { @class = "form-control small", type = "number" })
+                        @Html.TextBoxFor(m => m.General.ExpandedSitemapLevels, new { @class = "form-control form-control-sm", type = "number" })
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
                             The default page size for archive pages. Please note that this this
                             can be overridden for specific archives.
                         </blockquote>
-                        @Html.TextBoxFor(m => m.General.ArchivePageSize, new { @class = "form-control small", type = "number" })
+                        @Html.TextBoxFor(m => m.General.ArchivePageSize, new { @class = "form-control form-control-sm", type = "number" })
                     </div>
                 </div>
             </div>            
@@ -99,7 +99,7 @@
                             The time in minutes that web browsers can use pages before
                             asking the server for new updates.
                         </blockquote>
-                        @Html.TextBoxFor(m => m.Cache.PagesExpires, new { @class = "form-control small", type = "number" })
+                        @Html.TextBoxFor(m => m.Cache.PagesExpires, new { @class = "form-control form-control-sm", type = "number" })
                     </div>                
                 </div>
                 <div class="col-sm-6">
@@ -109,7 +109,7 @@
                             The time in minutes that web browsers can use posts before
                             asking the server for new updates.
                         </blockquote>
-                        @Html.TextBoxFor(m => m.Cache.PostsExpires, new { @class = "form-control small", type = "number" })
+                        @Html.TextBoxFor(m => m.Cache.PostsExpires, new { @class = "form-control form-control-sm", type = "number" })
                     </div>                
                 </div>
             </div> 
@@ -121,7 +121,7 @@
                             The full URL (including any folder name) to the CDN used to serve 
                             uploaded media. Leave blank to use default storage URL.
                         </blockquote>
-                        @Html.TextBoxFor(m => m.Cache.MediaCDN, new { @class = "form-control small" })
+                        @Html.TextBoxFor(m => m.Cache.MediaCDN, new { @class = "form-control form-control-sm" })
                     </div>
                 </div>
             </div>

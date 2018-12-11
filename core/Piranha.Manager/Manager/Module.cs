@@ -93,14 +93,14 @@ namespace Piranha.Manager
         public string Version => Piranha.Utils.GetAssemblyVersion(this.GetType().Assembly);
 
         /// <summary>
-        /// Gets the release date
-        /// </summary>
-        public string ReleaseDate => "2018-05-30";
-
-        /// <summary>
         /// Gets the description
         /// </summary>
         public string Description => "Manager panel for Piranha CMS for AspNetCore.";
+
+        /// <summary>
+        /// Gets/sets the icon URL.
+        /// </summary>
+        public string IconUrl => "http://piranhacms.org/assets/twitter-shield.png";
 
         /// <summary>
         /// Gets the package url.

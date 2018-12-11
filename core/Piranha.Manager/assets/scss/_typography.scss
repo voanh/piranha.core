@@ -19,3 +19,10 @@ a {
     font-size: .6rem;
     text-transform: uppercase;
 }
+
+.text-nooverflow {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

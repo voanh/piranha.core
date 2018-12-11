@@ -3,31 +3,30 @@
     ViewBag.Title = "Modules";
     ViewBag.Controller = "Module";
 }
-<div class="row">
-    <div class="col-sm-9">
-        @foreach (var author in Model.Modules.Keys) {
-            <div class="list-group">
-                <div class="list-group-item">
-                    <h4 class="list-group-item-heading">@author</h4>
-                </div>
-                @foreach (var module in Model.Modules[author]) {
-                    <div class="list-group-item">
-                        <label class="list-group-item-heading">@module.Name</label>
-                        <p class="list-group-item-text">@module.Description</p>
-                        <hr />
-                        <dl class="dl-horizontal">
-                            <dt>Version</dt>
-                            <dd>@module.Version</dd>
 
-                            <dt>Release Date</dt>
-                            <dd>@module.ReleaseDate</dd>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href="#">System</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Modules</li>
+    </ol>
+</nav>
 
-                            <dt>Package URL</dt>
-                            <dd><a href="@module.PackageURL">@module.PackageURL</a></dd>
-                        </dl>
-                    </div>
-                }
+@foreach (var author in Model.Modules.Keys) 
+{
+    var modules = Model.Modules[author];
+
+    @for (var n = 0; n < modules.Count; n = n + 2)
+    {
+        <div class="row">
+            <div class="col-md-6">
+                @Html.DisplayFor(m => modules[n])
             </div>
-        }
-    </div>
-</div>
+            @if (n + 1 < modules.Count)
+            {
+                <div class="col-md-6">
+                    @Html.DisplayFor(m => modules[n + 1])
+                </div>
+            }
+        </div>
+    }
+}

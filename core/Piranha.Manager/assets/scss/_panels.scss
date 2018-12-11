@@ -65,6 +65,14 @@
         position: relative;
     }
 
+    .form-group {
+        margin-bottom: .5rem;
+
+        label {
+            font-size: .8rem;
+        }
+    }
+
     &.panel-blocks {
         width: 300px;
         right: -287px;

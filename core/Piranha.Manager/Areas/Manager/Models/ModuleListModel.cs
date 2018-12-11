@@ -19,6 +19,8 @@ namespace Piranha.Areas.Manager.Models
             return new ModuleListModel() {
                 Modules = App.Modules
                     .Select(m => m.Instance)
+                    .OrderBy(m => m.Author)
+                    .ThenBy(m => m.Name)
                     .GroupBy(m => m.Author)
                     .ToDictionary(m => m.Key, m => m.ToList())
             };

@@ -23,8 +23,6 @@ form {
     }
 
     .form-group {
-        margin-bottom: .5rem;
-
         label {
             color: $text_medium;
             //font-size: .8rem;
@@ -47,6 +45,12 @@ form {
 
             .form-check-input {
                 margin-top: .5rem;
+            }
+        }
+
+        .checkbox {
+            label {
+                font-weight: normal;
             }
         }
     }
