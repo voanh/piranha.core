@@ -21,5 +21,7 @@
     <ProjectReference Include="..\..\core\Piranha.ImageSharp\Piranha.ImageSharp.csproj" />
     <ProjectReference Include="..\..\core\Piranha.Local.FileStorage\Piranha.Local.FileStorage.csproj" />
     <ProjectReference Include="..\..\core\Piranha.Manager\Piranha.Manager.csproj" />
+
+    <ProjectReference Include="..\..\modules\Piranha.SubSites\Piranha.SubSites.csproj" />
   </ItemGroup>
 </Project>

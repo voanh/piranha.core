@@ -49,7 +49,8 @@ namespace MvcWeb
             var pageTypeBuilder = new Piranha.AttributeBuilder.PageTypeBuilder(api)
                 .AddType(typeof(Models.BlogArchive))
                 .AddType(typeof(Models.StandardPage))
-                .AddType(typeof(Models.TeaserPage));
+                .AddType(typeof(Models.TeaserPage))
+                .AddType(typeof(Piranha.SubSites.Models.SubSitePage));
             pageTypeBuilder.Build()
                 .DeleteOrphans();
             var postTypeBuilder = new Piranha.AttributeBuilder.PostTypeBuilder(api)
@@ -60,7 +61,15 @@ namespace MvcWeb
             // Register middleware
             app.UseStaticFiles();
             app.UseAuthentication();
-            app.UsePiranha();
+            app.UseMiddleware<Piranha.AspNetCore.ApplicationMiddleware>()
+                .UseMiddleware<Piranha.AspNetCore.AliasMiddleware>()
+                .UseMiddleware<Piranha.SubSites.SubSiteMiddleware>()
+                .UseMiddleware<Piranha.AspNetCore.PageMiddleware>()
+                .UseMiddleware<Piranha.AspNetCore.PostMiddleware>()
+                .UseMiddleware<Piranha.AspNetCore.ArchiveMiddleware>()
+                .UseMiddleware<Piranha.AspNetCore.StartPageMiddleware>()
+                .UseMiddleware<Piranha.AspNetCore.SitemapMiddleware>();
+            //app.UsePiranha();
             app.UsePiranhaManager();
             app.UseMvc(routes => 
             {

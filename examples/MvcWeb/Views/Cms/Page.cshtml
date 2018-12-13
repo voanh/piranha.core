@@ -8,6 +8,8 @@
 <div class="container body-container">
     <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10 col-xs-12">
+            @DateTime.Now.ToLongDateString()
+
             @Html.DisplayFor(m => m.Blocks)
         </div>
     </div>
