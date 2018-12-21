@@ -100,8 +100,10 @@ namespace Piranha.Extend.Fields
         /// <returns>True if the fields are equal</returns>
         public override bool Equals(object obj)
         {
-            if (obj is SelectField<T>)
-                return Equals((SelectField<T>)obj);
+            if (obj is SelectField<T> field)
+            {
+                return Equals(field);
+            }
             return false;
         }
 
@@ -178,7 +180,7 @@ namespace Piranha.Extend.Fields
 
                 foreach (var val in Enum.GetValues(typeof(T)))
                 {
-                    _items.Add(new SelectFieldItem()
+                    _items.Add(new SelectFieldItem
                     {
                         Title = GetEnumTitle((Enum)val),
                         Value = (Enum)val

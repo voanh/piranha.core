@@ -32,13 +32,13 @@ namespace Piranha.Tests.Repositories
     [Collection("Integration tests")]
     public class Posts : BaseTests
     {
-        private Guid SITE_ID = Guid.NewGuid();
-        private Guid BLOG_ID = Guid.NewGuid();
-        private Guid CAT_1_ID = Guid.NewGuid();
-        private Guid POST_1_ID = Guid.NewGuid();
-        private Guid POST_2_ID = Guid.NewGuid();
-        private Guid POST_3_ID = Guid.NewGuid();
-        private Guid POST_DI_ID = Guid.NewGuid();
+        private readonly Guid SITE_ID = Guid.NewGuid();
+        private readonly Guid BLOG_ID = Guid.NewGuid();
+        private readonly Guid CAT_1_ID = Guid.NewGuid();
+        private readonly Guid POST_1_ID = Guid.NewGuid();
+        private readonly Guid POST_2_ID = Guid.NewGuid();
+        private readonly Guid POST_3_ID = Guid.NewGuid();
+        private readonly Guid POST_DI_ID = Guid.NewGuid();
         protected ICache cache;
 
         public interface IMyService {
@@ -711,27 +711,5 @@ namespace Piranha.Tests.Repositories
                 Assert.Equal("My service value", post.Regions.Body.Value);
             }            
         }
-
-        /*
-        [Fact]
-        public void CreateDIGeneric() {
-            using (var api = new Api(GetDb(), new ContentServiceFactory(services), storage, cache)) {
-                var post = MyDIPost.Create(api);
-
-                Assert.NotNull(post);
-                Assert.Equal("My service value", post.Body.Value);
-            }            
-        }
-
-        [Fact]
-        public void CreateDIDynamic() {
-            using (var api = new Api(GetDb(), new ContentServiceFactory(services), storage, cache)) {
-                var post = Models.DynamicPost.Create(api, nameof(MyDIPost));
-
-                Assert.NotNull(post);
-                Assert.Equal("My service value", post.Regions.Body.Value);
-            }            
-        }
-        */
     }
 }

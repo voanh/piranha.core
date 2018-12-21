@@ -35,7 +35,9 @@ namespace Piranha.Extend.Fields
                 var title = Value.ToString();
 
                 if (title.Length > 40)
+                {
                     title = title.Substring(0, 40) + "...";
+                }
                 return title;
             }
             return null;
@@ -56,8 +58,10 @@ namespace Piranha.Extend.Fields
         /// <returns>True if the fields are equal</returns>
         public override bool Equals(object obj)
         {
-            if (obj is SimpleField<T>)
-                return Equals((SimpleField<T>)obj);
+            if (obj is SimpleField<T> field)
+            {
+                return Equals(field);
+            }
             return false;
         }
 

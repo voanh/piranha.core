@@ -8,13 +8,10 @@
  * 
  */
 
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using Piranha.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
+using Newtonsoft.Json;
 
 namespace Piranha.Repositories
 {
@@ -23,7 +20,7 @@ namespace Piranha.Repositories
         private readonly IDb _db;
         private static readonly Dictionary<string, Models.SiteType> _types = new Dictionary<string, Models.SiteType>();
         private static object _typesMutex = new Object();
-        private static bool _isInitialized = false;
+        private static volatile bool _isInitialized = false;
 
         /// <summary>
         /// Default constructor.

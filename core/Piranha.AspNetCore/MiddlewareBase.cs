@@ -32,11 +32,6 @@ namespace Piranha.AspNetCore
         protected ILogger _logger;
 
         /// <summary>
-        /// The item key for accessing the stored site id.
-        /// </summary>
-        //public const string SiteId = "Piranha_SiteId";
-
-        /// <summary>
         /// Creates a new middleware instance.
         /// </summary>
         /// <param name="next">The next middleware in the pipeline</param>
@@ -53,7 +48,9 @@ namespace Piranha.AspNetCore
         public MiddlewareBase(RequestDelegate next, ILoggerFactory factory) : this(next)
         {
             if (factory != null)
+            {
                 _logger = factory.CreateLogger(this.GetType().FullName);
+            }
         }
 
         /// <summary>
@@ -74,24 +71,10 @@ namespace Piranha.AspNetCore
         {
             var values = context.Request.Query["piranha_handled"];
             if (values.Count > 0)
+            {
                 return values[0] == "true";
+            }
             return false;
         }
-
-        /// <summary>
-        /// Gets the id from the currently requested site.
-        /// </summary>
-        /// <param name="context">The current HttpContext</param>
-        /// <returns>The requested site id</returns>
-        /*
-        protected Guid GetSiteId(HttpContext context)
-        {
-            object id = null;
-
-            if (context.Items.TryGetValue(SiteId, out id))
-                return (Guid)id;
-            return Guid.Empty;
-        }
-        */
     }
 }
