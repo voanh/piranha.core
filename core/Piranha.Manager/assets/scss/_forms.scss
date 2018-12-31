@@ -1,5 +1,16 @@
 @import "colors";
 
+input {
+    &.search-field {
+        color: $text_light;
+        border: none 0;
+
+        &::placeholder {
+            color: $text_lighter;
+        }
+    }
+}
+
 form {
     //margin-top: 1.5rem;
 

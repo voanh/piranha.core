@@ -92,12 +92,7 @@
     </nav>            
 </div>
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item" aria-current="page"><a href="#">Content</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Media</li>
-    </ol>
-</nav>
+<h1>@ViewBag.Title</h1>
 
 @if (!string.IsNullOrWhiteSpace(ViewBag.Message)) {
     <div class="row">
@@ -122,7 +117,7 @@
     <div class="col-sm-12">
         <div class="table-filter" data-table="#media-table">
             <div class="form-group">
-                <input id="media-search" type="text" class="form-control input-block inline-search inline-search-light" placeholder="Search for a media file in the current folder">
+                <input id="media-search" type="text" class="form-control input-block search-field" placeholder="Search for a media file in the current folder">
             </div>
         </div>
         <table id="media-table" class="table table-main table-media">

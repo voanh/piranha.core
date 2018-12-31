@@ -6,17 +6,26 @@
     background: $bg_navbar;
     left: 0;
     top: 0;
-    width: 50px;
+    width: 54px;
     height: 100%;
+    border-right: solid 4px $bg_panel;
     opacity: 0.2;
     overflow: hidden;
     z-index: 1000;
     transition: all 0.2s ease-in-out;
 
     &:hover {
-        width: 200px;
+        width: 204px;
         opacity: 1;
         transition: all 0.2s ease-in-out;
+    }
+
+    .logo {
+        background: url("../img/logo-menu.png") no-repeat;
+        background-size: contain;
+        width: 190px;
+        height: 36px;
+        margin: .75rem .25rem;
     }
 
     ul {
@@ -24,8 +33,12 @@
         width: 200px;
 
         li {
-            border-bottom: solid 1px lighten($bg_navbar, 10%);
+            border-top: solid 1px lighten($bg_navbar, 10%);
             position: relative;
+
+            &:last-child {
+                border-bottom: solid 1px lighten($bg_navbar, 10%);
+            }
 
             &.active::after {
                 content: "";
@@ -36,7 +49,7 @@
                 right: 0;
                 margin-top: -8px;
                 border: solid 8px transparent;
-                border-right-color: $bg;
+                border-right-color: $bg_panel;
             }
 
             a, span {
@@ -76,7 +89,13 @@
             }
 
             li {
-                border-bottom: none;
+                border-top: none;
+
+                &:last-child {
+                    a {
+                        padding-bottom: .75rem;
+                    }
+                }
             }
         }
     }

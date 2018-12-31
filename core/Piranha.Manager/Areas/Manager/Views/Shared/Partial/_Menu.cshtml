@@ -5,6 +5,7 @@
     var controller = ViewBag.Controller?.ToLower();
 }
 
+<div class="logo"></div>
 <ul class="navbar-nav">
     @foreach (var group in Piranha.Manager.Menu.Items) 
     {
@@ -12,19 +13,24 @@
         {
             <li>
                 <span class="header"><i class="@group.Css"></i>@group.Name</span>
-                @foreach (var item in group.Items) 
+                @if (group.Items.Count > 0)
                 {
-                    if (string.IsNullOrWhiteSpace(item.Policy) || (await AuthorizationService.AuthorizeAsync(User, item.Policy)).Succeeded) 
-                    {
-                        <li @(item.Controller.ToLower() == controller ? "class=active" : "")>
-                            <a href="@Url.Action(item.Action, item.Controller, item.Params)">
-                                @if (!string.IsNullOrEmpty(item.Css)) {
-                                    <i class="@item.Css"></i>
-                                }
-                                @item.Name
-                            </a>
-                        </li>
-                    }
+                    <ul>
+                        @foreach (var item in group.Items) 
+                        {
+                            if (string.IsNullOrWhiteSpace(item.Policy) || (await AuthorizationService.AuthorizeAsync(User, item.Policy)).Succeeded) 
+                            {
+                                <li @(item.Controller.ToLower() == controller ? "class=active" : "")>
+                                    <a href="@Url.Action(item.Action, item.Controller, item.Params)">
+                                        @if (!string.IsNullOrEmpty(item.Css)) {
+                                            <i class="@item.Css"></i>
+                                        }
+                                        @item.Name
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
                 }
             </li>
         }
