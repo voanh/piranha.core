@@ -13,20 +13,26 @@
 @using (var form = Html.BeginForm("Save", "Site", FormMethod.Post, new { @class = "form", @role = "form" })) {
     @Html.HiddenFor(m => m.Site.Id)
 
-    <div class="row">
-        <div class="col-sm-12 buttons">
-            <!-- Actions -->
-            <button type="submit" class="btn btn-labeled btn-success pull-right">
-                <span class="btn-label">
-                    <i class="fas fa-check"></i>
-                </span>
-                @if (Model.Site.Id != Guid.Empty) {
-                    <text>Update</text>
-                } else {
-                    <text>Save</text>
+    <h1>@ViewBag.Title</h1>
+
+    <div class="top-nav">
+        <nav>
+            <ul class="navbar-nav">
+                @if ((await Authorization.AuthorizeAsync(User, Piranha.Manager.Permission.SitesEdit)).Succeeded)
+                {
+                    <li>
+                        <button type="submit" class="btn btn-sm btn-labeled btn-success">
+                            <i class="fas fa-check"></i>
+                            @if (Model.Site.Id != Guid.Empty) {
+                                <text>Update</text>
+                            } else {
+                                <text>Save</text>
+                            }
+                        </button>
+                    </li>
                 }
-            </button>
-        </div>
+            </ul>
+        </nav>            
     </div>
 
     @if (!string.IsNullOrWhiteSpace(ViewBag.Message)) {
