@@ -2,6 +2,10 @@
 
 .table {
     thead {
+        tr {
+            border-bottom: solid 4px $bg_main;
+        }
+        
         th {
             background: $color_border;
             font-family: "Open Sans",Arial;
