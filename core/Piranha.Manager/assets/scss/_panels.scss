@@ -73,6 +73,33 @@
         }
     }
 
+    &.panel-sm {
+        width: 300px;
+        right: -300px;
+
+        &.active {
+            right: 0;
+        }
+    }
+
+    &.panel-md {
+        width: 400px;
+        right: -400px;
+
+        &.active {
+            right: 0;
+        }
+    }
+
+    &.panel-lg {
+        width: 600px;
+        right: -600px;
+
+        &.active {
+            right: 0;
+        }
+    }
+
     &.panel-blocks {
         width: 300px;
         right: -287px;

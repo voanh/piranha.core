@@ -26,7 +26,7 @@
             @if ((await Authorization.AuthorizeAsync(User, Piranha.Manager.Permission.AliasesEdit)).Succeeded)
             {
                 <li>
-                    <a href="#" class="btn btn-sm btn-labeled btn-primary" data-toggle="modal" data-target="#modalAddAlias">
+                    <a href="#" class="btn btn-sm btn-labeled btn-primary" data-toggle="panel" data-target="#panelAlias">
                         <i class="fas fa-plus"></i>Add
                     </a>
                 </li>
@@ -82,48 +82,36 @@
     </tbody>
 </table>
 
-<div id="modalAddAlias" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <form action="@Url.Action("Add")" method="post">
-            <input type="hidden" name="SiteId" value="@Model.SiteId">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Add new alias</h4>
+@if ((await Authorization.AuthorizeAsync(User, Piranha.Manager.Permission.AliasesEdit)).Succeeded)
+{
+    <div id="panelAlias" class="panel panel-md">
+        <a class="panel-close" href="#"><i class="fas fa-times"></i></a>
+        <span class="panel-title">Create Alias</span>
+        <div class="panel-body">
+            @using (var form = Html.BeginForm("Add", "Alias", FormMethod.Post, new { @class = "form", @role = "form" })) 
+            {
+                <input type="hidden" name="SiteId" value="@Model.SiteId">
+                <div class="form-group">
+                    <label>Alias URL</label>
+                    <input type="text" class="form-control form-control-sm" name="AliasUrl" placeholder="Add a new Alias URL">
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Alias URL</label>
-                                <input type="text" class="form-control" name="AliasUrl" placeholder="Add a new Alias URL">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Redirect URL</label>
-                                <input type="text" class="form-control" name="RedirectUrl" placeholder="Add the URL to redirect to">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="IsPermanent" value="true">
-                                    If the redirect should be permanent.
-                                </label>
-                            </div>
-                        </div>
+                <div class="form-group">
+                    <label>Redirect URL</label>
+                    <input type="text" class="form-control form-control-sm" name="RedirectUrl" placeholder="Add the URL to redirect to">
+                </div>
+                <div class="form-group">
+                    <label>Permanent</label>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="IsPermanent" checked="true">
+                        <label>If the redirect should be permanent.</label>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-sm btn-labeled btn-success">
+                        <i class="fas fa-check"></i>Save
+                    </button>
                 </div>
-            </div>
-        </form>
+            }
+        </div>
     </div>
-</div>
+}

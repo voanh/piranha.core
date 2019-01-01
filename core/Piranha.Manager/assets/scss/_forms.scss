@@ -4,6 +4,7 @@ input {
     &.search-field {
         color: $text_light;
         border: none 0;
+        font-weight: 300;
 
         &::placeholder {
             color: $text_lighter;

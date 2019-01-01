@@ -10037,6 +10037,14 @@ $(document).ready(function() {
             RegisterMarkdown(e);
         });
 
+    $(".panel-close").click(function() {
+        $(this).parent().removeClass("active");
+    });
+
+    $("[data-toggle='panel']").click(function () {
+        $($(this).attr('data-target')).addClass("active");
+    });
+
     manager.tools.positionblocks();
     manager.tools.positionButtonsFixed();
 });
