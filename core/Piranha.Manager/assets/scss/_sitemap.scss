@@ -162,9 +162,11 @@ li.sitemap-item {
 
     .actions {
         a {
-            display: inline-block;
+            display: block;
             font-size: 14px;
 			margin-top: 2px;
+			padding: 10px;
+			float: left;
 			
 			&.add-after, &.add-below {
 				font-size: 16px;
