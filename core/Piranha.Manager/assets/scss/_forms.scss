@@ -65,6 +65,13 @@ form {
                 font-weight: normal;
             }
         }
+
+        &.submit {
+            border-top: solid 1px $color_border;
+            padding-top: 1rem;
+            margin-top: 1rem;
+            text-align: right;
+        }
     }
 
     &.dropzone {

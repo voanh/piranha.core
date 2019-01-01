@@ -89,7 +89,13 @@ $(document).ready(function() {
     });
 
     $("[data-toggle='panel']").click(function () {
-        $($(this).attr('data-target')).addClass("active");
+        var panel = $($(this).attr("data-target"));
+
+        // Set autofocus
+        panel.find(".autofocus").focus();
+
+        // Activate panel
+        $($(this).attr("data-target")).addClass("active");
     });
 
     manager.tools.positionblocks();
