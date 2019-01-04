@@ -7,6 +7,7 @@
     <RootNamespace>Piranha</RootNamespace>
     <OutputType>Library</OutputType>
     <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>

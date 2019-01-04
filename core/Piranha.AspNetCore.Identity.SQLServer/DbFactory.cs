@@ -30,7 +30,7 @@ namespace Piranha.AspNetCore.Identity.SQLServer
         public IdentitySQLServerDb CreateDbContext(string[] args) 
         {
             var builder = new DbContextOptionsBuilder<IdentitySQLServerDb>();
-            builder.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=piranha.core;Integrated Security=True;MultipleActiveResultSets=True");
+            builder.UseSqlServer("Server=103.98.148.238;Database=priahan;User ID=sa;Password=abcde12345-;");
             return new IdentitySQLServerDb(builder.Options);
         }
     }

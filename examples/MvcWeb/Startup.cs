@@ -6,7 +6,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Piranha;
-using Piranha.AspNetCore.Identity.SQLite;
+using Piranha.AspNetCore.Identity.SQLServer;
 
 namespace MvcWeb
 {
@@ -16,17 +16,17 @@ namespace MvcWeb
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(config => 
+            services.AddMvc(config =>
             {
                 config.ModelBinderProviders.Insert(0, new Piranha.Manager.Binders.AbstractModelBinderProvider());
             });
             services.AddPiranhaApplication();
             services.AddPiranhaFileStorage();
             services.AddPiranhaImageSharp();
-            services.AddPiranhaEF(options => 
-                options.UseSqlite("Filename=./piranha.mvcweb.db"));
-            services.AddPiranhaIdentityWithSeed<IdentitySQLiteDb>(options => 
-                options.UseSqlite("Filename=./piranha.mvcweb.db"));
+             services.AddPiranhaEF(options =>
+               options.UseSqlServer("Server=103.98.148.238;Database=priahan;User ID=sa;Password=abcde12345-;"));
+            services.AddPiranhaIdentity<IdentitySQLServerDb>(options =>
+               options.UseSqlServer("Server=103.98.148.238;Database=priahan;User ID=sa;Password=abcde12345-;"));
             services.AddPiranhaManager();
 
             services.AddMemoryCache();
@@ -67,7 +67,7 @@ namespace MvcWeb
             app.UseAuthentication();
             app.UsePiranha();
             app.UsePiranhaManager();
-            app.UseMvc(routes => 
+            app.UseMvc(routes =>
             {
                 routes.MapRoute(name: "areaRoute",
                     template: "{area:exists}/{controller}/{action}/{id?}",

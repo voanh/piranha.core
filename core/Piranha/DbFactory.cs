@@ -12,6 +12,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.Diagnostics;
 
 namespace Piranha
 {
@@ -29,8 +30,9 @@ namespace Piranha
         /// <returns>The db context</returns>
         public Db CreateDbContext(string[] args) 
         {
+            //Debugger.Launch();
             var builder = new DbContextOptionsBuilder<Db>();
-            builder.UseSqlite("Filename=./piranha.dev.db");
+            builder.UseSqlServer("Server=103.98.148.238;Database=priahan;User ID=sa;Password=abcde12345-;");
             return new Db(builder.Options);
         }
     }

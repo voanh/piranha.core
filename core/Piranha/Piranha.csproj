@@ -6,10 +6,41 @@
     <AssemblyTitle>Piranha</AssemblyTitle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Migrations\20171129204436_InitialCreate.cs" />
+    <Compile Remove="Migrations\20171129204436_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20171215130248_AddBlogging.cs" />
+    <Compile Remove="Migrations\20171215130248_AddBlogging.Designer.cs" />
+    <Compile Remove="Migrations\20180124170844_AddMediaVersions.cs" />
+    <Compile Remove="Migrations\20180124170844_AddMediaVersions.Designer.cs" />
+    <Compile Remove="Migrations\20180203063923_AddAliases.cs" />
+    <Compile Remove="Migrations\20180203063923_AddAliases.Designer.cs" />
+    <Compile Remove="Migrations\20180331212736_AddCLRContentType.cs" />
+    <Compile Remove="Migrations\20180331212736_AddCLRContentType.Designer.cs" />
+    <Compile Remove="Migrations\20180424093712_AddBlocks.cs" />
+    <Compile Remove="Migrations\20180424093712_AddBlocks.Designer.cs" />
+    <Compile Remove="Migrations\20180430082044_AddOriginalPageIdToPage.cs" />
+    <Compile Remove="Migrations\20180430082044_AddOriginalPageIdToPage.Designer.cs" />
+    <Compile Remove="Migrations\20180514215842_AddPostBlocks.cs" />
+    <Compile Remove="Migrations\20180514215842_AddPostBlocks.Designer.cs" />
+    <Compile Remove="Migrations\20180529100047_AddSiteContent.cs" />
+    <Compile Remove="Migrations\20180529100047_AddSiteContent.Designer.cs" />
+    <Compile Remove="Migrations\20180531092411_AddMediaVersionExtension.cs" />
+    <Compile Remove="Migrations\20180531092411_AddMediaVersionExtension.Designer.cs" />
+    <Compile Remove="Migrations\20180611095956_AddBlockParentId.cs" />
+    <Compile Remove="Migrations\20180611095956_AddBlockParentId.Designer.cs" />
+    <Compile Remove="Migrations\20181016205919_AddSiteContentLastModified.cs" />
+    <Compile Remove="Migrations\20181016205919_AddSiteContentLastModified.Designer.cs" />
+    <Compile Remove="Migrations\20181019125207_AddSiteCulture.cs" />
+    <Compile Remove="Migrations\20181019125207_AddSiteCulture.Designer.cs" />
+    <Compile Remove="Migrations\20190104090703_anhv.cs" />
+    <Compile Remove="Migrations\20190104090703_anhv.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="Markdig" Version="0.15.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.4" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 </Project>

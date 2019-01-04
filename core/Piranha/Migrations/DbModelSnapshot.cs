@@ -2,12 +2,12 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Piranha;
 
 namespace Piranha.Migrations
 {
-    [NoCoverage]
     [DbContext(typeof(Db))]
     partial class DbModelSnapshot : ModelSnapshot
     {
@@ -15,7 +15,9 @@ namespace Piranha.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Piranha.Data.Alias", b =>
                 {
@@ -196,7 +198,8 @@ namespace Piranha.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("MediaId", "Width", "Height")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Height] IS NOT NULL");
 
                     b.ToTable("Piranha_MediaVersions");
                 });
